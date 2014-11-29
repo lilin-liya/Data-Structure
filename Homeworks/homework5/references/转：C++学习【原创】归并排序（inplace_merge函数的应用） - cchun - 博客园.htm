@@ -1,0 +1,193 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0060)http://www.cnblogs.com/cchun/archive/2012/05/26/2519394.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml"><HEAD><META 
+content="IE=10.0000" http-equiv="X-UA-Compatible">
+ 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>转：C++学习【原创】归并排序（inplace_merge函数的应用） - cchun - 博客园</TITLE> <LINK href="转：C++学习【原创】归并排序（inplace_merge函数的应用）%20-%20cchun%20-%20博客园_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="转：C++学习【原创】归并排序（inplace_merge函数的应用）%20-%20cchun%20-%20博客园_files/bundle-arrow.css" 
+rel="stylesheet" type="text/css"> <LINK title="RSS" href="http://www.cnblogs.com/cchun/rss" 
+rel="alternate" type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/cchun/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/cchun/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="转：C++学习【原创】归并排序（inplace_merge函数的应用）%20-%20cchun%20-%20博客园_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'cchun', cb_enable_mathjax=false;</SCRIPT>
+ 
+<SCRIPT src="转：C++学习【原创】归并排序（inplace_merge函数的应用）%20-%20cchun%20-%20博客园_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.17344"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="header"><!--done--> 
+<DIV class="header">
+<DIV class="headerText"><A class="headermaintitle" id="Header1_HeaderTitle" 
+href="http://www.cnblogs.com/cchun/">cchun</A><BR></DIV></DIV></DIV>
+<DIV id="mylinks"><!--done--> <A class="menu" id="MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp;&nbsp;
+<A class="menu" id="MyLinks1_MyHomeLink" 
+href="http://www.cnblogs.com/cchun/">首页</A>&nbsp;&nbsp;&nbsp;<A class="menu" id="MyLinks1_NewPostLink" 
+href="http://i.cnblogs.com/EditPosts.aspx?opt=1" 
+rel="nofollow">新随笔</A>&nbsp;&nbsp;&nbsp;<A class="menu" id="MyLinks1_ContactLink" 
+accesskey="9" href="http://space.cnblogs.com/msg/send/cchun" 
+rel="nofollow">联系</A>&nbsp;&nbsp;&nbsp;<A class="menu" id="MyLinks1_Syndication" 
+href="http://www.cnblogs.com/cchun/rss">订阅</A><A id="MyLinks1_XMLLink" href="http://www.cnblogs.com/cchun/rss"><IMG 
+alt="订阅" src="转：C++学习【原创】归并排序（inplace_merge函数的应用）%20-%20cchun%20-%20博客园_files/xml.gif"></A>&nbsp;&nbsp;&nbsp;
+<A class="menu" id="MyLinks1_Admin" href="http://i.cnblogs.com/" 
+rel="nofollow">管理</A> </DIV>
+<DIV id="mytopmenu">
+<DIV class="blogStats">随笔 - 290&nbsp; 文章 - 0&nbsp;评论 - 2&nbsp;trackbacks - 0 
+</DIV></DIV>
+<DIV id="leftcontent">
+<DIV id="leftcontentcontainer">
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+<BR><!--done--> 
+<DIV class="newsItem">
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+</DIV></DIV>
+<DIV id="centercontent"><!--done--> 
+<DIV class="post">
+<DIV class="postTitle">
+<H1><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/cchun/archive/2012/05/26/2519394.html">转：C++学习【原创】归并排序（inplace_merge函数的应用）</A></H1></DIV>
+<DIV id="cnblogs_post_body">
+<P><SPAN>inplace_merge函数的作用和merge函数差不多，只不过是在一个容器中进行归并。函数参数：inplace_merge(first,mid,last,compare);//将[first,mid) 
+和 
+[mid,last)这两个区间进行归并成一个有序序列。</SPAN><BR><BR><SPAN>注意</SPAN><SPAN>：[first,mid)和[mid,last)都要呈升序或降序排列！</SPAN><BR><BR><SPAN>还记得归并排序的写法么？归并排序利用了分治的思想，将一个容器分割，然后再将它们一个个合并起来，最后形成一个有序的序列。归并排序的核心代码就在于合并两个序列，不过STL的开发人员已经为我们完成了，我们直接调用就可以了。</SPAN><BR><BR><SPAN>例题：给你n个学生的信息，根据它们的分数从小到大排序，注意：如果遇到分数相等的同学，按照原来的顺序排列。</SPAN><BR><SPAN>因为归并排序是一个稳定的排序，所以我们不需要理睬注意事项。</SPAN><BR><SPAN>代码：</SPAN><BR><SPAN>#include 
+&lt;iostream&gt;</SPAN><BR><SPAN>#include 
+&lt;cstdio&gt;</SPAN><BR><SPAN>#include &lt;vector&gt;</SPAN><BR><SPAN>#include 
+&lt;cstdlib&gt;</SPAN><BR><SPAN>#include 
+&lt;cstring&gt;</SPAN><BR><SPAN>#include 
+&lt;algorithm&gt;</SPAN><BR><SPAN>#include &lt;string&gt;</SPAN><BR><SPAN>using 
+namespace std;</SPAN><BR><SPAN>struct 
+student</SPAN><BR><SPAN>{</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;string 
+name;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;int 
+score;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;bool 
+operator &lt;(const student &amp;t) 
+const</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;{</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;return 
+score&lt;t.score;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;};</SPAN><BR><SPAN>};</SPAN><BR><SPAN>typedef 
+vector &lt;student&gt; ::iterator Iter;</SPAN><BR><SPAN>vector &lt;student&gt; 
+V;</SPAN><BR><SPAN>void merge_sort(Iter a,Iter 
+b)</SPAN><BR><SPAN>{</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;if(a&gt;=b) 
+return 
+;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;Iter 
+mid=((a-V.begin())+(b-V.begin()))/2+V.begin();</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;merge_sort(a,mid);</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;merge_sort(mid+1,b);</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;inplace_merge(a,mid,b,less&lt;student&gt;());</SPAN><BR><SPAN>}</SPAN><BR><SPAN>int 
+main()</SPAN><BR><SPAN>{</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;int 
+n;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;cin&gt;&gt;n;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;for(int 
+i=0;i&lt;n;i++)</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;{</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;student 
+t;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;cin&gt;&gt;t.name&gt;&gt;t.score;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;V.push_back(t);</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;}</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;merge_sort(V.begin(),V.end());</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;for(Iter 
+it=V.begin();it!=V.end();it++)</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;cout&lt;&lt;it-&gt;name&lt;&lt;" 
+"&lt;&lt;it-&gt;score&lt;&lt;endl;</SPAN><BR><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;</SPAN><SPAN>&nbsp;return 
+0;</SPAN><BR><SPAN>}</SPAN></P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<DIV class="postDesc">posted on <SPAN id="post-date">2012-05-26 17:45</SPAN> <A 
+href="http://www.cnblogs.com/cchun/">cchun</A> 阅读(<SPAN 
+id="post_view_count">...</SPAN>) 评论(<SPAN id="post_comment_count">...</SPAN>)  
+<A href="http://i.cnblogs.com/EditPosts.aspx?postid=2519394" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(2519394);return false;" href="http://www.cnblogs.com/cchun/archive/2012/05/26/2519394.html#">收藏</A></DIV></DIV>
+<SCRIPT type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=118644,cb_entryId=2519394,cb_blogApp=currentBlogApp,cb_blogUserGuid='7d4a80b5-0902-e111-b7b9-842b2b196315',cb_entryCreatedDate='2012/5/26 17:45:00';loadViewCount(cb_entryId);</SCRIPT>
+ <A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/cchun/archive/2012/05/26/2519394.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/cchun/archive/2012/05/26/2519394.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="开发者的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="opt_under_post"></DIV>
+<SCRIPT type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</SCRIPT>
+ 
+<DIV id="ad_under_post_holder">
+<SCRIPT type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</SCRIPT>
+ 
+<DIV class="c_ad_block" id="google_ad_c1">
+<DIV id="div-gpt-ad-1346480159711-0" style="width: 300px; height: 250px;">
+<SCRIPT type="text/javascript">
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </SCRIPT>
+     </DIV></DIV></DIV>
+<DIV id="under_post_news"></DIV>
+<DIV class="c_ad_block" id="google_ad_c2">
+<DIV id="div-gpt-ad-1410860226396-0" style="width: 468px; height: 60px;">
+<SCRIPT type="text/javascript">
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</SCRIPT>
+ </DIV></DIV>
+<DIV id="under_post_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</SCRIPT>
+ </DIV><!--done--> 
+<DIV class="footer">		Copyright ©2014 cchun Powered by: <A class="footerlink" 
+href="http://www.cnblogs.com/">博客园</A> 模板提供：<A class="footerlink" href="http://blog.hjenglish.com/">沪江博客</A><BR></DIV></DIV></BODY></HTML>

@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//dtD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/dtD/xhtml1-transitional.dtd">
+<!-- saved from url=(0041)http://www.2cto.com/kf/201309/242210.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+
+<link rel="stylesheet" href="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/article.css" type="text/css">
+
+<link href="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/dialog.css" rel="stylesheet" type="text/css">
+<title>原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟</title>
+<meta name="keywords" content="原地,归并,排序">
+<meta name="description" content="师姐给身边的某小朋友 出了道题：O(1)空间复杂度实现归并排序在草纸上笔画了一下，20分钟编码调试思路是：merge的时候，merge(arr, l, m, n)在 l m+1处放 i j指标，循环i直到m  若arr[j]&gt;arr[i] 则右...">
+<script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/jquery.min.js"></script>
+<script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/jquery.sgallery.js"></script>
+<script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/search_common.js"></script>
+<script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/m.js"></script>
+<script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/json.js"></script><link href="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/bdsstyle.css" rel="stylesheet" type="text/css"><script src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/logger.js"></script></head><body><div class="" style="display: none; position: absolute;"><div class="aui_outer"><table class="aui_border"><tbody><tr><td class="aui_nw"></td><td class="aui_n"></td><td class="aui_ne"></td></tr><tr><td class="aui_w"></td><td class="aui_c"><div class="aui_inner"><table class="aui_dialog"><tbody><tr><td colspan="2" class="aui_header"><div class="aui_titleBar"><div class="aui_title" style="cursor: move; display: block;"></div><a class="aui_close" href="javascript:/*artDialog*/;" style="display: block;">×</a></div></td></tr><tr><td class="aui_icon" style="display: none;"><div class="aui_iconBg" style="background-image: none; background-position: initial initial; background-repeat: initial initial;"></div></td><td class="aui_main" style="width: auto; height: auto;"><div class="aui_content" style="padding: 20px 25px;"></div></td></tr><tr><td colspan="2" class="aui_footer"><div class="aui_buttons" style="display: none;"></div></td></tr></tbody></table></div></td><td class="aui_e"></td></tr><tr><td class="aui_sw"></td><td class="aui_s"></td><td class="aui_se" style="cursor: se-resize;"></td></tr></tbody></table></div></div><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/o.htm" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><iframe frameborder="0" style="display: none;"></iframe><div id="bdshare_s" style="display: block;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div id="bdshare_l" style="display: none;"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_mshare mshare">一键分享</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_renren rrw">人人网</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_douban db">豆瓣网</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_sqq sqq">QQ好友</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_thx thx">和讯微博</a></li><li><a href="http://www.2cto.com/kf/201309/242210.html#" class="bds_more">更多...</a></li></ul><p><a href="http://www.2cto.com/kf/201309/242210.html#" class="goWebsite">百度分享</a></p></div></div></div><div id="BAIDU_DUP_wrapper_745777_0"></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom"></script><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/fixed7o.js"></script>
+<script language="javascript" type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/dialog.js"></script>
+<script language="javascript" type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/syntaxhighlighter.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/XRegExp.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shCore.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushBash.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushCpp.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushCSharp.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushCss.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushDelphi.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushDiff.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushGroovy.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushJava.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushJScript.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushPhp.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushPlain.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushPython.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushRuby.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushScala.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushSql.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushVb.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushXml.js"></script><script type="text/javascript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shBrushPerl.js"></script>
+<link type="text/css" rel="stylesheet" href="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shCore.css">
+<link type="text/css" rel="stylesheet" href="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/shThemeDefault.css">
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+
+
+
+
+<div class="line_top_box">
+	<dl class="top_box_left">
+		<dd class="left_logo"><a href="http://www.2cto.com/"></a></dd>
+		<dd class="left_menu_link">
+																<a class="Channel" href="http://www.2cto.com/News/">资讯</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/Article/">安全</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://bbs.2cto.com/">论坛</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/Soft/">下载</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://book.2cto.com/">读书</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/kf/">程序开发</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/database/">数据库</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/os/">系统</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/net/">网络</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/ebook/">电子书</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://zz.2cto.com/">站长学院</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/ym/">源码</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/QQ/">QQ</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://space.2cto.com/">专栏</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/px/">考试</a>&nbsp;|&nbsp;
+													<a class="Channel" href="http://www.2cto.com/shouce/">手册</a>&nbsp;|&nbsp;
+														</dd>
+	</dl>
+</div>
+<div class="line_top_lmbox">
+	<dl class="lmpic"></dl>
+	<dl class="lmlinkbox"><dd>
+										<a class="Channel" href="http://www.2cto.com/kf/ware/">软件开发</a>|
+							<a class="Channel" href="http://www.2cto.com/kf/qianduan/">web前端</a>|
+							<a class="Channel" href="http://www.2cto.com/kf/web/">Web开发</a>|
+							<a class="Channel" href="http://www.2cto.com/kf/yidong/">移动开发</a>|
+							<a class="Channel" href="http://www.2cto.com/kf/all/">综合编程</a>|
+								</dd></dl>
+	<dl class="LoginBox"><dd><script type="text/javascript">document.write('<iframe src="http://www.2cto.com/index.php?m=member&c=index&a=mini&forward='+encodeURIComponent(location.href)+'&siteid=1" allowTransparency="true"  width="150" height="32" frameborder="0" scrolling="no"></iframe>')</script><iframe src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/index(1).htm" allowtransparency="true" width="150" height="32" frameborder="0" scrolling="no"></iframe></dd></dl>
+</div>
+<div class="divline8"></div>
+<div class="tadv">
+
+<a target="_blank" href="http://vip.2cto.com/"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/980-80.gif" width="980" height="90"></a>
+<!-- 广告位：顶部banner -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("298612");</script><div id="BAIDU_DUP_wrapper_298612_0"></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(1)"></script><div style="padding-top:0px;width:980px;margin:auto;padding-bottom:0px;clear:both;overflow:hidden">
+<a target="_blank" href="http://www.2cto.com/peixun2014/luxiang/"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/erqilx.gif" width="980" height="80"></a>
+</div>
+<div style="padding-top:0px;width:980px;margin:auto;padding-bottom:0px;clear:both;overflow:hidden">
+<a target="_blank" href="http://www.qdwsb.com/"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/wsb.jpg" width="980" height="60"></a>
+</div>
+
+</div>
+
+
+<div class="divline8"></div>
+<div class="it165_box">
+	<div class="box_left">
+		
+		<dl class="box_p">
+			<dd class="pRight"><a href="http://www.2cto.com/">首页</a><span> &gt; </span><a href="http://www.2cto.com/kf/">程序开发</a> &gt; <a href="http://www.2cto.com/kf/ware/">软件开发</a> &gt; <a href="http://www.2cto.com/kf/ware/cpp/">C++</a> &gt;  正文</dd>
+			<script type="text/javascript">BAIDU_CLB_fillSlot("703722");</script><div id="BAIDU_DUP_wrapper_703722_0"></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(2)"></script><form action="http://so.2cto.com/cse/search" target="_blank">
+<dd class="pRSearch">
+<input name="s" type="hidden" value="11831876334997631217">
+<input type="submit" value=" "></dd>
+<dd class="pRKeyWork"><input id="Keyword" name="q" type="text"></dd>
+</form>
+			</dl>
+		<dl class="box_t"><dd>原地归并排序 Merge Sort in place</dd></dl>
+																										<dl class="box_INFO">
+			<dd class="frinfo line_blue">2013-09-09 10:39:00  &nbsp;&nbsp;&nbsp;&nbsp;<a style="font-weight:bold;padding:5px 0px 5px 20px;background:url(&#39;http://www.2cto.com/statics/images/icon/user_comment.png&#39;) left center no-repeat" href="http://www.2cto.com/kf/201309/242210.html#comment_iframe">我来说两句&nbsp;</a>&nbsp;&nbsp;  &nbsp;&nbsp;  作者：LiFeitengup</dd>
+			<dd class="frsize line_blue">
+			<span id="favorite">
+				<a href="javascript:;" onclick="add_favorite(&#39;原地归并排序 Merge Sort in place&#39;);" class="t6">收藏</a>
+			</span>&nbsp;&nbsp;
+				<a target="_blank" href="http://www.2cto.com/index.php?m=member&c=content&a=publish&modid=1&siteid=1"><img border="0" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/dl.jpg">我要投稿</a>
+			</dd>
+			
+		</dl>
+		<dl class="box_body" id="fontzoom"><dd id="Article">
+		师姐给身边的某小朋友 出了道题：O(1)空间复杂度实现归并排序
+<div>在草纸上笔画了一下，20分钟编码调试</div>
+<div>思路是：merge的时候，merge(arr, &nbsp;l, &nbsp;m, n)在 l m+1处放 i j指标，</div>
+<div>循环i直到m &nbsp; &nbsp;若arr[j]&gt;arr[i] &nbsp;则右移 i-m的元素 j++ &nbsp;m++&nbsp;</div>
+<div>简单修改 使用模板 就可以扩展到多种arr类型，以下简单以数组为例</div>
+<div><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/20130909103949440.jpg" style="height: 560px; width: 466.6666666666667px;"><br>
+<img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/20130909103952505.jpg" style="width: 277px; height: 106px;"></div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>
+<div><div id="highlighter_551215" class="syntaxhighlighter  cpp"><div class="toolbar"><span><a href="http://www.2cto.com/kf/201309/242210.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include &lt;iostream&gt;&nbsp; </code></div><div class="line number2 index1 alt1"><code class="cpp keyword bold">using</code> <code class="cpp keyword bold">namespace</code> <code class="cpp plain">std;&nbsp; </code></div><div class="line number3 index2 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number4 index3 alt1"><code class="cpp keyword bold">void</code> <code class="cpp plain">merge(</code><code class="cpp color1 bold">int</code><code class="cpp plain">* arr, </code><code class="cpp color1 bold">int</code> <code class="cpp plain">l, </code><code class="cpp color1 bold">int</code> <code class="cpp plain">m, </code><code class="cpp color1 bold">int</code> <code class="cpp plain">n){&nbsp; </code></div><div class="line number5 index4 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">i=l, j=m+1;&nbsp; </code></div><div class="line number6 index5 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">while</code><code class="cpp plain">(i&lt;=m &amp;&amp; j&lt;=n){&nbsp; </code></div><div class="line number7 index6 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(arr[i]&gt;arr[j]){</code><code class="cpp comments">//向右平移左半部分&nbsp; </code></div><div class="line number8 index7 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">tmp = arr[j];&nbsp; </code></div><div class="line number9 index8 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code> <code class="cpp plain">t=j; t&gt;i; t--)&nbsp;&nbsp; </code></div><div class="line number10 index9 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">arr[t]=arr[t-1];&nbsp; </code></div><div class="line number11 index10 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">arr[i] = tmp;&nbsp; </code></div><div class="line number12 index11 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">++m;&nbsp; </code></div><div class="line number13 index12 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">++j;&nbsp; </code></div><div class="line number14 index13 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}&nbsp; </code></div><div class="line number15 index14 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">++i;&nbsp; </code></div><div class="line number16 index15 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}&nbsp; </code></div><div class="line number17 index16 alt2"><code class="cpp plain">}&nbsp; </code></div><div class="line number18 index17 alt1"><code class="cpp spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number19 index18 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">mergeSort(</code><code class="cpp color1 bold">int</code><code class="cpp plain">* arr, </code><code class="cpp color1 bold">int</code> <code class="cpp plain">l, </code><code class="cpp color1 bold">int</code> <code class="cpp plain">n){&nbsp; </code></div><div class="line number20 index19 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(l&lt;n){&nbsp; </code></div><div class="line number21 index20 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">m = (l+n)/2;&nbsp; </code></div><div class="line number22 index21 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">mergeSort(arr, l, m);&nbsp; </code></div><div class="line number23 index22 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">mergeSort(arr, m+1, n);&nbsp; </code></div><div class="line number24 index23 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">merge(arr, l, m, n);&nbsp; </code></div><div class="line number25 index24 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}&nbsp; </code></div><div class="line number26 index25 alt1"><code class="cpp plain">}&nbsp; </code></div><div class="line number27 index26 alt2"><code class="cpp spaces">&nbsp;&nbsp;</code>&nbsp;</div><div class="line number28 index27 alt1"><code class="cpp color1 bold">int</code> <code class="cpp plain">main(){&nbsp; </code></div><div class="line number29 index28 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">a[9] = {2, 3, 9, 3, 1, 4, 6, 8, 10};&nbsp; </code></div><div class="line number30 index29 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">mergeSort(a,0,8);&nbsp; </code></div><div class="line number31 index30 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code> <code class="cpp plain">(</code><code class="cpp color1 bold">int</code> <code class="cpp plain">i=0; i&lt;=8; ++i)&nbsp; </code></div><div class="line number32 index31 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">cout&lt;&lt;a[i]&lt;&lt;</code><code class="cpp string">" "</code><code class="cpp plain">;&nbsp; </code></div><div class="line number33 index32 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">cout&lt;&lt;endl;&nbsp; </code></div><div class="line number34 index33 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>&nbsp;</p>
+</div>
+<div>&nbsp;</div>
+						</dd></dl>
+		<script type="text/javascript">
+		<!--
+		$(function(){
+		  $('#Article img').LoadImage(true, 630, 560,'http://www.2cto.com/statics/images/s_nopic.gif');    
+		})
+		
+		//-->
+		</script>
+	<div id="pages" class="box_body">	</div>
+	<dl style="width:650px;height:100px;padding-top:10px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("771048");</script><div id="BAIDU_DUP_wrapper_771048_0"><iframe width="640" height="90" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom.htm" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(3)"></script><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/inlayFixed.js"></script></dd>
+	</dl>
+	<dl class="box_Nsc">
+		<dd class="lcopy"><a class="ckcopy" onclick="copyToClipBoard()">点击复制链接 与好友分享!</a><a class="ckhome" href="http://www.2cto.com/">回本站首页</a></dd>
+		<script> 
+		function copyToClipBoard(){ 
+		var clipBoardContent=document.title + '\r\n' + document.location; 
+		clipBoardContent+='\r\n'; 
+		window.clipboardData.setData("Text",clipBoardContent); 
+		alert("恭喜您！复制成功"); 
+		} 
+		</script>
+
+		<div class="Article-Tool">
+                               	  <!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"> <span style="float:left">分享到：</span>
+
+<a class="bds_qzone" title="分享到QQ空间" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_tsina" title="分享到新浪微博" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_tqq" title="分享到腾讯微博" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_baidu" title="分享到百度搜藏" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_renren" title="分享到人人网" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_kaixin001" title="分享到开心网" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<a class="bds_tieba" title="分享到百度贴吧" href="http://www.2cto.com/kf/201309/242210.html#"></a>
+<span class="bds_more">更多</span>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=12732" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+var bds_config = {'snsKey':{'tsina':'2386826374','tqq':'5e544a8fdea646c5a5f3967871346eb8'}};
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+                                
+	  </div>
+
+		
+		
+		<dd class="bbstt">您对本文章有什么意见或着疑问吗？请到<a href="http://bbs.2cto.com/">论坛讨论</a>您的关注和建议是我们前行的参考和动力&nbsp;&nbsp; </dd>
+	</dl>
+	<dl class="box_NPre">
+		<dd class="TLineX"><strong>上一篇：</strong><a href="http://www.2cto.com/kf/201309/242197.html">leetcode Surrounded Regions 详解</a></dd>
+		<dd><strong>下一篇：</strong><a href="http://www.2cto.com/kf/201309/242217.html"> HDU2108-Shape of HDU</a></dd>
+	</dl>
+	<dl class="linetb"></dl>
+	<dl class="about"><dd>相关文章</dd></dl>
+				<div class="alistline"><a href="http://www.2cto.com/kf/201209/153645.html" target="blank">归并排序 例题即模版 XMU1328 hdu3743</a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201212/174207.html" target="blank">归并排序算法原理分析与代码实现</a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201212/179489.html" target="blank">排序之归并操作</a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201303/196433.html" target="blank">归并排序</a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201303/198451.html" target="blank">归并排序算法 </a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201304/201719.html" target="blank">UVA 10810 - Ultra-QuickSort（归并</a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201307/226568.html" target="blank">归并排序 </a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201307/226945.html" target="blank">归并排序的原理及时间复杂度 </a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201307/229905.html" target="blank">归并排序 </a></div>
+			<div class="alistline"><a href="http://www.2cto.com/kf/201308/238714.html" target="blank">归并排序 </a></div>
+			<dl class="linetb"></dl>
+	<dl style="width:650px;height:70px;padding-top:10px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("182716");</script><div id="BAIDU_DUP_wrapper_182716_0"><iframe width="640" height="60" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(17).htm" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(4)"></script></dd>
+	</dl>
+
+	<dl style="width:650px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("517916");</script><div id="BAIDU_DUP_wrapper_517916_0"></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(5)"></script></dd>
+	</dl>
+	<dl class="linetb"></dl>
+	<dl class="about"><dd>图文推荐</dd></dl>
+	<div class="picbox">
+						<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/kf/201311/256148.html"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/thumb_126_90_20131108091132412.jpg" width="126" height="90" border="0"></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/kf/201311/256148.html">C++ - 在文件中 查</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/kf/201311/256135.html"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/thumb_126_90_20131108082949843.jpg" width="126" height="90" border="0"></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/kf/201311/256135.html">经典回溯问题-----旅</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/kf/201311/256133.html"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/thumb_126_90_20131108082536407.jpg" width="126" height="90" border="0"></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/kf/201311/256133.html">经典回溯问题----n皇</a></dd>
+		</dl>
+				<dl class="wbox">
+			<dd class="npicbox"><a target="_blank" href="http://www.2cto.com/kf/201311/256131.html"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/thumb_126_90_20131108082200807.jpg" width="126" height="90" border="0"></a></dd>
+			<dd class="npictext"><a href="http://www.2cto.com/kf/201311/256131.html">01背包问题-----回溯</a></dd>
+		</dl>
+					</div>
+		<dl class="linetb"></dl>
+		<div id="pl" style="float:left;width:650px;padding:10px 10px 0px 10px;overflow:hidden;background-color:white">
+		<iframe src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/uapi.htm" width="100%" height="387" id="comment_iframe" name="comment_iframe" frameborder="0" scrolling="no"></iframe>
+	</div>
+			<dl style="width:650px;float:left;padding-left:10px">
+		<dd><script type="text/javascript">BAIDU_CLB_fillSlot("771057");</script><div id="BAIDU_DUP_wrapper_771057_0"><iframe width="640" height="60" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(15).htm" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(6)"></script></dd>
+	</dl>
+	</div>
+	<div class="box_right">
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px">
+			<a target="_blank" href="http://vip.2cto.com/"><img src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/300-250.gif" width="300" height="250"></a></div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div class="box_right_box">
+			<dl class="bTitle"><dd onmousemove="m_tab(1)" id="indexW" class="tablinkschecked">排行</dd><dd onmousemove="m_tab(2)" id="hotW" class="tablinkscheck">热门</dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index" id="index" style="display: block;">
+					<dd class="picline"></dd>
+															<dd class="list">150 | <a target="_blank" title="C++ STL学习之三：容器deque深入学习 " href="http://www.2cto.com/kf/201204/126761.html">C++ STL学习之三：容器deque深入学习 </a></dd>
+										<dd class="list">117 | <a target="_blank" title="C/C++之define用法小结" href="http://www.2cto.com/kf/201301/185188.html">C/C++之define用法小结</a></dd>
+										<dd class="list">111 | <a target="_blank" title="cocos2d-x CCRotateTo 对初始角，旋转角的处理" href="http://www.2cto.com/kf/201210/160135.html">cocos2d-x CCRotateTo 对初始角，旋</a></dd>
+										<dd class="list">107 | <a target="_blank" title="利用ffmpeg解码h264流的代码" href="http://www.2cto.com/kf/201207/140704.html">利用ffmpeg解码h264流的代码</a></dd>
+										<dd class="list">103 | <a target="_blank" title="ios面试题收集一（附基本答案）" href="http://www.2cto.com/kf/201208/148909.html">ios面试题收集一（附基本答案）</a></dd>
+										<dd class="list">92 | <a target="_blank" title="c++模板详解 " href="http://www.2cto.com/kf/201205/131820.html">c++模板详解 </a></dd>
+										<dd class="list">90 | <a target="_blank" title="WinExec()和system()的区别" href="http://www.2cto.com/kf/201303/193365.html">WinExec()和system()的区别</a></dd>
+										<dd class="list">83 | <a target="_blank" title="最优二叉搜索树问题" href="http://www.2cto.com/kf/201303/196820.html">最优二叉搜索树问题</a></dd>
+														</dl>
+				<dl class="index" id="hot" style="display: none;">
+					<dd class="picline"></dd>
+															<dd class="list"><a target="_blank" title="ios面试题收集一（附基本答案）" href="http://www.2cto.com/kf/201208/148909.html">ios面试题收集一（附基本答案）</a></dd>
+										<dd class="list"><a target="_blank" title="c++模板详解 " href="http://www.2cto.com/kf/201205/131820.html">c++模板详解 </a></dd>
+										<dd class="list"><a target="_blank" title="C++ STL学习之三：容器deque深入学习 " href="http://www.2cto.com/kf/201204/126761.html">C++ STL学习之三：容器deque深入学习 </a></dd>
+										<dd class="list"><a target="_blank" title="利用ffmpeg解码h264流的代码" href="http://www.2cto.com/kf/201207/140704.html">利用ffmpeg解码h264流的代码</a></dd>
+										<dd class="list"><a target="_blank" title="IOS学习笔记18—UIImageView" href="http://www.2cto.com/kf/201207/144529.html">IOS学习笔记18—UIImageView</a></dd>
+										<dd class="list"><a target="_blank" title="教你编写DOTA外挂" href="http://www.2cto.com/kf/201201/117737.html">教你编写DOTA外挂</a></dd>
+										<dd class="list"><a target="_blank" title="关于iOS6.0 屏幕旋转的问题 " href="http://www.2cto.com/kf/201211/166504.html">关于iOS6.0 屏幕旋转的问题 </a></dd>
+										<dd class="list"><a target="_blank" title="initialization of &#39;XXX&#39; is skipped by &#39;case&#39; label 原因及解决办法" href="http://www.2cto.com/kf/201112/115456.html">initialization of 'XXX' is skip</a></dd>
+														</dl>
+			</div>
+			<script type="text/javascript">
+			<!--
+				function m_tab(index)
+				{
+					if (index == 1){
+						document.getElementById("indexW").className = "tablinkschecked";
+						document.getElementById("hotW").className = "tablinkscheck";
+						document.getElementById("index").style.display = "block";
+						document.getElementById("hot").style.display = "none";
+					}
+					else{
+						document.getElementById("hotW").className = "tablinkschecked";
+						document.getElementById("indexW").className = "tablinkscheck";
+						document.getElementById("index").style.display = "none";
+						document.getElementById("hot").style.display = "block";
+					}
+				}
+			//-->
+			</script>
+		</div>
+		<div class="rightlineT"><div class="rxline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:60px">
+				<!-- 广告位：内容页右侧小广告位 -->
+			<script type="text/javascript">BAIDU_CLB_fillSlot("406189");</script><div id="BAIDU_DUP_wrapper_406189_0"><iframe id="baidu_clb_slot_iframe_406189_0" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟.htm" onload="BAIDU_DUP_CLB_renderFrame(&#39;406189_0&#39;)" width="300" height="60" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border:0; vertical-align:bottom; margin:0; display:block;"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(7)"></script>
+		</div>
+<div class="rightlineT"><div class="rxline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:80px">
+				<!-- 广告位：内容页右侧小广告位 -->
+			<script type="text/javascript">BAIDU_CLB_fillSlot("703749");</script><div id="BAIDU_DUP_wrapper_703749_0"><iframe id="baidu_clb_slot_iframe_703749_0" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟.htm" onload="BAIDU_DUP_CLB_renderFrame(&#39;703749_0&#39;)" width="300" height="80" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border:0; vertical-align:bottom; margin:0; display:block;"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(8)"></script>
+		</div>
+		<div class="rightlineNo"></div>
+		<div class="box_right_box">
+			<dl class="bTitle borT"><dd class="newarc"></dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index">
+					<iframe frameborder="0" name="Iframe1" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/index.htm" width="100%" height="200">
+				您的浏览器不支持嵌入式框架，或者当前配置为不显示嵌入式框架。
+			</iframe>
+				</dl>
+			</div>
+		</div>
+                                <div class="rightlineT"><div class="rxline"></div></div>
+
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px"><script type="text/javascript">BAIDU_CLB_fillSlot("182692");</script><div id="BAIDU_DUP_wrapper_182692_0"><iframe id="baidu_clb_slot_iframe_182692_0" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟.htm" onload="BAIDU_DUP_CLB_renderFrame(&#39;182692_0&#39;)" width="300" height="250" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border:0; vertical-align:bottom; margin:0; display:block;"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(9)"></script> </div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div class="box_right_box">
+			<dl class="bTitle">
+				<dd onmousemove="m_tabs(1)" id="ArticlesW" class="tablinkschecked">文章</dd>
+				<dd onmousemove="m_tabs(2)" id="DownW" class="tablinkscheck">下载</dd>
+				<dd onmousemove="m_tabs(3)" id="BookW" class="tablinkscheck">读书</dd>
+			</dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index" id="Articles">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="Win2000下关闭无用端口" href="http://www.2cto.com/Article/200410/1.html">Win2000下关闭无用端口</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="禁止非法用户登录综合设置 [win9x篇]" href="http://www.2cto.com/Article/200410/2.html">禁止非法用户登录综合设置 [win9x篇]</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="关上可恶的后门——消除NetBIOS隐患" href="http://www.2cto.com/Article/200410/3.html">关上可恶的后门——消除NetBIOS隐患</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="网络入侵检测系统" href="http://www.2cto.com/Article/200410/4.html">网络入侵检测系统</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="潜伏在Windows默认设置中的陷井" href="http://www.2cto.com/Article/200410/5.html">潜伏在Windows默认设置中的陷井</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="调制解调器的不安全" href="http://www.2cto.com/Article/200410/6.html">调制解调器的不安全</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="构建Windows 2000服务器的安全防护林" href="http://www.2cto.com/Article/200410/7.html">构建Windows 2000服务器的安全防护林</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="SQL Server 2000的安全配置" href="http://www.2cto.com/Article/200410/8.html">SQL Server 2000的安全配置</a></dd>
+														</dl>
+				<dl class="index" id="Down" style="display:none">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="Windows优化大师注册机源码" href="http://www.2cto.com/soft/200409/53.html">Windows优化大师注册机源码</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="Process Viewer 汉化版" href="http://www.2cto.com/soft/200409/62.html">Process Viewer 汉化版</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="Aspcode动画教程" href="http://www.2cto.com/soft/200409/79.html">Aspcode动画教程</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="WIN 2000服务器防止ICMP数据包攻击教程" href="http://www.2cto.com/soft/200409/128.html">WIN 2000服务器防止ICMP数据包攻击教程</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="实现网络隐身的简单方法" href="http://www.2cto.com/soft/200409/129.html">实现网络隐身的简单方法</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="手工进行克隆帐号" href="http://www.2cto.com/soft/200409/130.html">手工进行克隆帐号</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="用W32DASM破解网页合并器的密码" href="http://www.2cto.com/soft/200409/134.html">用W32DASM破解网页合并器的密码</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="注册表操作动画教程" href="http://www.2cto.com/soft/200409/138.html">注册表操作动画教程</a></dd>
+														</dl>
+				<dl class="index" id="Book" style="display:none">
+					<dd class="picline"></dd>
+															<dd class="list">·&nbsp;<a target="_blank" title="黑客攻防技术宝典：Web实战篇（第2版）" href="http://book.2cto.com/201206/20.html">黑客攻防技术宝典：Web实战篇（第2版）</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="超级网管员——网络安全" href="http://book.2cto.com/201207/43.html">超级网管员——网络安全</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="代码大全（第二版）" href="http://book.2cto.com/201207/64.html">代码大全（第二版）</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="软件之道:软件开发争议问题剖析" href="http://book.2cto.com/201207/68.html">软件之道:软件开发争议问题剖析</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CSS插件工具箱" href="http://book.2cto.com/201207/78.html">CSS插件工具箱</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CSS入门经典(第3版)" href="http://book.2cto.com/201207/139.html">CSS入门经典(第3版)</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="C#并行编程高级教程：精通.NET 4 Parallel Extension" href="http://book.2cto.com/201207/169.html">C#并行编程高级教程：精通.NET 4 Pa</a></dd>
+										<dd class="list">·&nbsp;<a target="_blank" title="CMMI+敏捷整合开发" href="http://book.2cto.com/201207/190.html">CMMI+敏捷整合开发</a></dd>
+														</dl>
+			</div>
+			<script type="text/javascript">
+			<!--
+				function m_tabs(index)
+				{
+					if (index == 1){
+						document.getElementById("ArticlesW").className = "tablinkschecked";
+						document.getElementById("DownW").className = "tablinkscheck";
+						document.getElementById("BookW").className = "tablinkscheck";
+						document.getElementById("Articles").style.display = "block";
+						document.getElementById("Down").style.display = "none";
+						document.getElementById("Book").style.display = "none";
+					}
+					else if (index == 2){
+						document.getElementById("ArticlesW").className = "tablinkscheck";
+						document.getElementById("DownW").className = "tablinkschecked";
+						document.getElementById("BookW").className = "tablinkscheck";
+						document.getElementById("Articles").style.display = "none";
+						document.getElementById("Down").style.display = "block";
+						document.getElementById("Book").style.display = "none";
+					}
+					else{
+						document.getElementById("ArticlesW").className = "tablinkscheck";
+						document.getElementById("DownW").className = "tablinkscheck";
+						document.getElementById("BookW").className = "tablinkschecked";
+						document.getElementById("Articles").style.display = "none";
+						document.getElementById("Down").style.display = "none";
+						document.getElementById("Book").style.display = "block";
+					}
+				}
+			//-->
+			</script>
+		</div>
+		<div class="rightlineNo"></div>
+		<div class="box_right_box">
+			<dl class="bTitle borT"><dd class="newdown"></dd></dl>
+		</div>
+		<div class="box_right_box">
+			<div class="paddingbox">
+				<dl class="index">
+															<dd class="picbox"><a target="_blank" class="plink" href="http://www.2cto.com/kf/201212/173650.html"><img class="pic1" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/20121205043328653.png" width="126" height="90" border="0"></a><span><a href="http://www.2cto.com/kf/201212/173650.html">一个C++多继承带来的</a></span></dd>
+										<dd class="picbox"><a target="_blank" class="plink" href="http://www.2cto.com/kf/201301/181628.html"><img class="pic1" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/20130108104633187.jpg" width="126" height="90" border="0"></a><span><a href="http://www.2cto.com/kf/201301/181628.html">数据结构学习之集合</a></span></dd>
+															<dd class="picline"></dd>
+															<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201111/110042.html">C/C++中的引用和指针</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201207/141979.html">C++ 静态变量之为什么只初始化一次</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201212/173650.html">一个C++多继承带来的游戏开发陷阱</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201301/181628.html">数据结构学习之集合</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201302/188253.html">红黑树的创建+线索化+性质检验+笔画输</a></dd>
+										<dd class="list">&#9642;&nbsp;<a target="_blank" href="http://www.2cto.com/kf/201308/235347.html">hdu2572 </a></dd>
+					</dl>
+			</div>
+			<div class="xline"></div>
+		</div>
+		<div class="box_right_line"><div class="xline"></div></div>
+		<div style="float:left;width:300px;background:white;padding-left:10px;height:250px">
+			<script type="text/javascript">BAIDU_CLB_fillSlot("771043");</script><div id="BAIDU_DUP_wrapper_771043_0" width="300px" height="250px" style="width: 300px; height: 250px; display: inline-block; z-index: 2147483646;"><iframe id="cproIframe1" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(16).htm" width="300" height="250" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(10)"></script><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/xuanting.js"></script></div>
+		<div class="box_right_line"><div class="xline"></div></div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+<!--
+function showLogin(){
+	window.art.dialog({id:'Login',iframe:'http://www.2cto.com/index.php?m=member&c=index&a=login&tupe=mini', title:'快捷登陆', width:'450', height:'310', lock:true}, function(){var d = window.art.dialog({id:'Login'}).data.iframe;var form = d.document.getElementById('dosubmit');form.click();return false;}, function(){window.art.dialog({id:'Login'}).close()});void(0);
+}
+function add_favorite(title) {
+		$.getJSON('http://www.2cto.com/api.php?op=add_favorite&title='+encodeURIComponent(title)+'&url='+encodeURIComponent(location.href)+'&'+Math.random()+'&callback=?', function(data){
+			if(data.status==1)	{
+				$("#favorite").html('收藏成功');
+			} else {
+				alert('请登陆');
+				window.location.href='http://home.2cto.com/?forward='+encodeURIComponent(location.href);
+			}
+		});
+	}
+//-->
+</script>
+<script language="JavaScript" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/api.php"></script>
+<!-- 广告位：右侧漂浮 -->
+<script type="text/javascript">BAIDU_CLB_fillSlot("137946");</script><div id="BAIDU_DUP_wrapper_137946_0"></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(11)"></script><div id="cproIframe2002holder" style="padding: 0px; display: block; visibility: visible; border: none; background-image: none; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 360px; right: 7px; top: 150px; background-position: initial initial; background-repeat: initial initial;"><div id="cproIframe2002CloseBtnWrap" style="position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);"></div><div id="cproIframe2002CloseBtn" style="position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;">关闭</div><div style="width: 130px; height: 360px; overflow: hidden;"><div style="display:none">-</div><iframe id="cproIframe2002" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(14).htm" width="130" height="360" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div></div><div id="cproIframe2001holder" style="padding: 0px; display: block; visibility: visible; border: none; background-image: none; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 360px; left: 7px; top: 150px; background-position: initial initial; background-repeat: initial initial;"><div id="cproIframe2001CloseBtnWrap" style="position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);"></div><div id="cproIframe2001CloseBtn" style="position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;">关闭</div><div style="width: 130px; height: 360px; overflow: hidden;"><div style="display:none">-</div><iframe id="cproIframe2001" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(13).htm" width="130" height="360" align="center,center" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" allowtransparency="true"></iframe></div></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/floatad.js"></script>
+
+<div style="width:980px;padding:8px 0px 8px 0px;margin:auto"><script type="text/javascript">BAIDU_CLB_fillSlot("333829");</script><div id="BAIDU_DUP_wrapper_333829_0"><iframe id="baidu_clb_slot_iframe_333829_0" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟.htm" onload="BAIDU_DUP_CLB_renderFrame(&#39;333829_0&#39;)" width="980" height="60" vspace="0" hspace="0" allowtransparency="true" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border:0; vertical-align:bottom; margin:0; display:block;"></iframe></div><script charset="utf-8" src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/ecom(12)"></script></div>
+
+
+<div class="foot">
+<p>
+<a target="_blank" href="http://www.2cto.com/about">关于我们</a> |
+<a target="_blank" href="http://www.2cto.com/about/contact.html">联系我们</a> |
+<a target="_blank" href="http://www.2cto.com/about/ads.html">广告服务</a> |
+<a target="_blank" href="http://www.2cto.com/about/touzi.html">投资合作</a> |
+<a target="_blank" href="http://www.2cto.com/about/Copyright.html">版权申明</a> |
+<a target="_blank" href="http://www.2cto.com/about/faq.html">在线帮助</a> |
+<a target="_blank" href="http://www.2cto.com/about/map.html">网站地图</a> |
+<a target="_blank" href="http://www.2cto.com/about/tg.html">作品发布</a> |
+<a target="_blank" href="http://vip.2cto.com/"><span style="COLOR: red">Vip技术培训</span></a>
+<br>
+<span class="style4">版权所有: <a href="http://www.2cto.com/" target="_blank">红黑联盟</a>--致力于做最好的IT技术学习网站<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1898984a3d796e86ad73ad1f4bc9f240' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./原地归并排序 Merge Sort in place - c++语言程序开发技术文章_c++编程 - 红黑联盟_files/h.js" type="text/javascript"></script>    
+</span>
+</p></div>
+
+
+</body></html>

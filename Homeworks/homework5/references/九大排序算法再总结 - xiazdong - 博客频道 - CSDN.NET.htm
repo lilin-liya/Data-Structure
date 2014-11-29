@@ -1,0 +1,1242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0053)http://blog.csdn.net/xiazdong/article/details/8462393 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" async="" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ga.js"></script><script id="allmobilize" charset="utf-8" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/allmobilize.min.js"></script><style type="text/css"></style>
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/xiazdong/article/details/8462393#">
+
+    <title>九大排序算法再总结 - xiazdong
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="如果要转载，需要注明出处： http://blog.csdn.net/xiazdong本文是 http://blog.csdn.net/xiazdong/article/details/7304239 的补充，当年看了《大话数据结构》总结的，但是现在看了《算法导论》，发现以前对排序的理解还不深入，所以打算对各个排序的思想再整理一遍。本文首先介绍了基于比较模型的排序算法，">
+    <script src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/xiazdong/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+
+<script src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/share.js"></script><link href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><script type="text/javascript" charset="utf-8" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/tracking.js"></script><script type="text/javascript" charset="utf-8" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/main.js"></script><link rel="stylesheet" type="text/css" href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/style(1).css"><link type="text/css" rel="stylesheet" href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/style(2).css"><script src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/logger.js"></script><link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style0_16.css?v=f4b44e79.css"></head>
+<body><iframe frameborder="0" style="display: none;"></iframe>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="about:block" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-right "><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://share.csdn.net/?ref=toolbar" target="_blank">Share</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/xiazdong">xiazdong</a></h2>
+            <h3>本博客已停，移至 blog.xiazdong.info</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/xiazdong?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/xiazdong?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/xiazdong/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "xiazdong";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/xiazdong";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://bbs.csdn.net/topics/390812950?page=2#post-398116601" target="_blank">
+<font color="blue">博客专家福利
+</font></a>
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://www.csdn.net/article/2014-10-13/2822071" target="_blank">
+<font color="red">专访徐宜生：坚决不做代码搬运工</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/40047403" target="_blank">
+<font color="blue">有奖试读&amp;征文:我们在互联网上奋斗的故事
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://weixin2014-sz.csdn.net/" target="_blank">
+<font color="red">微信开发者大会深圳站即将开幕
+</font></a>
+
+
+</div>                        </div>
+                        
+
+  
+<link href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/main(1).js"></script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET.htm">
+        九大排序算法再总结
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/xiazdong/article/category/1270511" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">【算法导论】</a> 
+        </span>
+    <span class="link_postdate">2013-01-03 21:46</span>
+    <span class="link_view" title="阅读次数">18349人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/xiazdong/article/details/8462393#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(6)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shoucang&#39;]);collectArticle(&#39;九大排序算法再总结&#39;,&#39;8462393&#39;);return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_jubao&#39;]);report(8462393,2);return false;" title="举报">举报</a></span>
+    
+</div>
+
+  
+    
+<div style="clear:both"></div><div style="border:solid 1px #ccc; background:#eee; float:left; min-width:200px;padding:4px 10px;"><p style="text-align:right;margin:0;"><span style="float:left;">目录<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" title="系统根据文章中H1到H6标签自动生成文章目录">(?)</a></span><a href="http://blog.csdn.net/xiazdong/article/details/8462393#" onclick="javascript:return openct(this);" title="展开">[+]</a></p><ol style="display:none;margin-left:14px;padding-left:14px;line-height:160%;"><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t0">一插入排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t1">递归版插入排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t2">二冒泡排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t3">三选择排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t4">四归并排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t5">五快速排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t6">六堆排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t7">七计数排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t8">八基数排序</a></li><li><a href="http://blog.csdn.net/xiazdong/article/details/8462393#t9">九桶排序</a></li></ol></div><div style="clear:both"></div><div id="article_content" class="article_content">
+
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px"><br>
+如果要转载，需要注明出处：&nbsp;<a href="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/editor/web/%E5%A6%82%E6%9E%9C%E8%A6%81%E8%BD%AC%E8%BD%BD%EF%BC%8C%E9%9C%80%E8%A6%81%E6%B3%A8%E6%98%8E%E5%87%BA%E5%A4%84%EF%BC%9Ahttp://blog.csdn.net/xiazdong" style="">http://blog.csdn.net/xiazdong</a></span></div>
+<div style="font-family:微软雅黑; font-size:14px">
+<hr>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><span style="font-family:NSimSum">本文是&nbsp;http://blog.csdn.net/xiazdong/article/details/7304239&nbsp;</span><span style="font-family:NSimSum">的补充，当年看了《<a target="_blank" style="color: #0000F0; display:inline; position:static; background:none;" href="http://www.so.com/s?q=%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84&ie=utf-8&src=se_lighten_quotes_f">大话数据结构</a>》总结的，但是现在看了《<a target="_blank" style="color: #0000F0; display:inline; position:static; background:none;" href="http://www.so.com/s?q=%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA&ie=utf-8&src=se_lighten_quotes_f">算法导论</a>》，发现以前对排序的理解还不深入，所以打算对各个排序的思想再整理一遍。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">本文首先介绍了基于比较模型的排序算法，即最坏复杂度都在Ω(nlgn)的排序算法，接着介绍了一些线性时间排序算法，这些排序算法虽然都在线性时间，但是都是在对输入数组有一定的约束的前提下才行。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">这篇文章参看了《算法导论》第2、3、4、6、7、8章而总结。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div><span style="font-family:NSimSum"><span style="font-size:14px">算法的由来：9世纪波斯数学家提出的：“al-Khowarizmi”</span></span></div>
+<div><span style="font-family:NSimSum"><span style="font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357801036_9228.GIF" alt=""><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">排序的定义：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">输入：n个数：a1,a2,a3,...,an</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">输出：n个数的排列:a1',a2',a3',...,an'，使得a1'&lt;=a2'&lt;=a3'&lt;=...&lt;=an'。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">In-place sort（不占用额外内存或占用常数的内存）：插入排序、选择排序、冒泡排序、堆排序、快速排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">Out-place sort：归并排序、计数排序、基数排序、桶排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">当需要对大量数据进行排序时，In-place sort就显示出优点，因为只需要占用常数的内存。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">设想一下，如果要对10000个数据排序，如果使用了Out-place sort，则假设需要用200G的额外空间，则一台老式电脑会吃不消，但是如果使用In-place sort，则不需要花费额外内存。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">stable sort：插入排序、冒泡排序、归并排序、计数排序、基数排序、桶排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">unstable sort：选择排序(5 8 5 2 9)、快速排序、堆排序。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><strong><span style="font-family:SimSun; font-size:14px">为何排序的稳定性很重要？</span></strong></div>
+<div style="font-family:微软雅黑; font-size:14px"><strong><br>
+</strong></div>
+<div><span style="font-family:SimSun; font-size:14px">在初学排序时会觉得稳定性有这么重要吗？两个一样的元素的顺序有这么重要吗？其实很重要。在基数排序中显得尤为突出，如下：</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357739159_8849.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>算法导论习题8.3-2</strong>说：如果对于不稳定的算法进行改进，使得那些不稳定的算法也稳定？</span></div>
+<div><span style="font-family:SimSun; font-size:14px">其实很简单，只需要在每个输入元素加一个index，表示初始时的数组索引，当不稳定的算法排好序后，对于相同的元素对index排序即可。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">基于比较的排序都是遵循“决策树模型”，而在决策树模型中，我们能证明给予比较的排序算法最坏情况下的运行时间为Ω(nlgn)，证明的思路是因为将n个序列构成的决策树的叶子节点个数至少有n!，因此高度至少为nlgn。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">线性时间排序虽然能够理想情况下能在线性时间排序，但是每个排序都需要对输入数组做一些假设，比如计数排序需要输入数组数字范围为[0,k]等。</span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">在排序算法的正确性证明中介绍了”循环不变式“，他类似于数学归纳法，"初始"对应"n=1"，"保持"对应"假设n=k成立，当n=k+1时"。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t0"></a><span style="font-size:22px"><strong><span style="font-family:SimHei">一、插入排序</span></strong></span></h2>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">特点：stable sort、In-place sort</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最优复杂度：当输入数组就是排好序的时候，复杂度为O(n)，而快速排序在这种情况下会产生O(n^2)的复杂度。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最差复杂度：当输入数组为倒序时，复杂度为O(n^2)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><span style="font-family:NSimSum">插入排序比较适合用于“少量元素的数组”。</span><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">其实插入排序的复杂度和逆序对的个数一样，当数组倒序时，逆序对的个数为n(n-1)/2，因此插入排序复杂度为O(n^2)。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">在算法导论2-4中有关于逆序对的介绍。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">伪代码：</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/401D0E97A02846F6B3A91493FBBF7D4D/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"></div>
+<p><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220939_7742.png" alt=""></p>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u><br>
+</u></strong></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">循环不变式：在每次循环开始前，A[1...i-1]包含了原来的A[1...i-1]的元素，并且已排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">初始：i=2，A[1...1]已排序，成立。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">保持：在迭代开始前，A[1...i-1]已排序，而循环体的目的是将A[i]插入A[1...i-1]中，使得A[1...i]排序，因此在下一轮迭代开 &nbsp; &nbsp; &nbsp; 始前，i++，因此现在A[1...i-1]排好序了，因此保持循环不变式。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">终止：最后i=n+1，并且A[1...n]已排序，而A[1...n]就是整个数组，因此证毕。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><strong><span style="font-size:14px">而在算法导论2.3-6中还问是否能将伪代码第6-8行用二分法实现？</span></strong></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><strong><span style="font-size:14px"><br>
+</span></strong></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">实际上是不能的。因为第6-8行并不是单纯的线性查找，而是还要移出一个空位让A[i]插入，因此就算二分查找用O(lgn)查到了插入的位置，但是还是要用O(n)的时间移出一个空位。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><strong><span style="font-size:14px">问：快速排序（不使用随机化）是否一定比插入排序快？</span></strong></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><strong><span style="font-size:14px"><br>
+</span></strong></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">答：不一定，当输入数组已经排好序时，插入排序需要O(n)时间，而快速排序需要O(n^2)时间。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t1"></a><span style="font-family:SimSun">递归版插入排序</span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357799464_6962.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t2"></a><span style="font-family:SimHei; font-size:22px"><strong>二、冒泡排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">特点：stable sort、In-place sort</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">思想：通过两两交换，像水中的泡泡一样，小的先冒出来，大的后冒出来。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">最坏运行时间：O(n^2)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">最佳运行时间：O(n^2)（当然，也可以进行改进使得最佳运行时间为O(n)）</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">算法导论思考题2-2中介绍了冒泡排序。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:Simsun; font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:Simsun"><span style="font-size:14px">伪代码：</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/7414A88A952D485892F9B8428688BBB5/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220942_6357.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u><br>
+</u></strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px">运用两次循环不变式，先证明第4-6行的内循环，再证明外循环。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">内循环不变式：在每次循环开始前，A[j]是A[j...n]中最小的元素。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">初始：j=n，因此A[n]是A[n...n]的最小元素。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">保持：当循环开始时，已知A[j]是A[j...n]的最小元素，将A[j]与A[j-1]比较，并将较小者放在j-1位置，因此能够说明A[j-1]是A[j-1...n]的最小元素，因此循环不变式保持。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">终止：j=i，已知A[i]是A[i...n]中最小的元素，证毕。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">接下来证明外循环不变式：在每次循环之前，A[1...i-1]包含了A中最小的i-1个元素，且已排序：A[1]&lt;=A[2]&lt;=...&lt;=A[i-1]。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">初始：i=1，因此A[1..0]=空，因此成立。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">保持：当循环开始时，已知A[1...i-1]是A中最小的i-1个元素，且A[1]&lt;=A[2]&lt;=...&lt;=A[i-1]，根据内循环不变式，终止时A[i]是A[i...n]中最小的元素，因此A[1...i]包含了A中最小的i个元素，且A[1]&lt;=A[2]&lt;=...&lt;=A[i-1]&lt;=A[i]</span></div>
+<div><span style="font-family:SimSun; font-size:14px">终止：i=n+1，已知A[1...n]是A中最小的n个元素，且A[1]&lt;=A[2]&lt;=...&lt;=A[n]，得证。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div>
+<div style="font-family:微软雅黑"><strong><span style="font-size:14px">在算法导论思考题2-2中又问了”冒泡排序和插入排序哪个更快“呢？</span></strong></div>
+<div style="font-family:微软雅黑; font-size:14px"><strong><br>
+</strong></div>
+<div><span style="font-family:SimSun; font-size:14px">一般的人回答：“差不多吧，因为渐近时间都是O(n^2)”。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">但是事实上不是这样的，插入排序的速度直接是逆序对的个数，而冒泡排序中执行“交换“的次数是逆序对的个数，因此冒泡排序执行的时间至少是逆序对的个数，因此<span style="font-family:SimSun; font-size:14px">插入排序</span>的执行时间至少比<span style="font-family:SimSun; font-size:14px">冒泡排序</span>快。</span></div>
+<br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimHei; font-size:18px"><strong>递归版冒泡排序</strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357795055_4478.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimHei; font-size:18px"><strong><br>
+</strong></span></div>
+<div><span style="font-family:SimHei; font-size:18px"><strong>改进版冒泡排序</strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px">最佳运行时间：O(n)</span></div>
+<div><span style="font-family:SimSun; font-size:14px">最坏运行时间：O(n^2)</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357795235_5992.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t3"></a><span style="font-family:SimHei; font-size:24px"><strong>三、选择排序</strong></span></h2>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">特性：In-place sort，unstable sort。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">思想：每次找一个最小值。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">最好情况时间：O(n^2)。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">最坏情况时间：O(n^2)。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">伪代码：</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357793648_7622.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>循环不变式</strong>：A[1...i-1]包含了A中最小的i-1个元素，且已排序。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>初始</strong>：i=1，A[1...0]=空，因此成立。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>保持</strong>：在某次迭代开始之前，保持循环不变式，即A[1...i-1]包含了A中最小的i-1个元素，且已排序，则进入循环体后，程序从 &nbsp; &nbsp; &nbsp; &nbsp; A[i...n]中找出最小值放在A[i]处，因此A[1...i]包含了A中最小的i个元素，且已排序，而i++，因此下一次循环之前，保持 &nbsp; &nbsp; &nbsp; 循环不变式：A[1..i-1]包含了A中最小的i-1个元素，且已排序。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>终止</strong>：i=n，已知A[1...n-1]包含了A中最小的i-1个元素，且已排序，因此A[n]中的元素是最大的，因此A[1...n]已排序，证毕。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>算法导论2.2-2中问了"为什么伪代码中第3行只有循环n-1次而不是n次"？</strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">在循环不变式证明中也提到了，如果A[1...n-1]已排序，且包含了A中最小的n-1个元素，则A[n]肯定是最大的，因此肯定是已排序的。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-size:18px"><strong>递归版选择排序</strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357794153_7357.GIF" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><strong><span style="font-size:14px">递归式：</span></strong></div>
+<div style="font-family:微软雅黑"><strong><span style="font-size:14px"><br>
+</span></strong></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px">T(n)=T(n-1)+O(n)&nbsp;</span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px">=&gt; T(n)=O(n^2)</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t4"></a><span style="font-family:SimHei; font-size:22px"><strong>四、归并排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">特点：stable sort、Out-place sort</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">思想：运用分治法思想解决排序问题。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最坏情况运行时间：O(nlgn)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最佳运行时间：O(nlgn)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">分治法介绍：分治法就是将原问题分解为多个独立的子问题，且这些子问题的形式和原问题相似，只是规模上减少了，求解完子问题后合并结果构成原问题的解。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">分治法通常有3步：Divide（分解子问题的步骤） 、 Conquer（递归解决子问题的步骤）、 Combine（子问题解求出来后合并成原问题解的步骤）。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">假设Divide需要f(n)时间，Conquer分解为b个子问题，且子问题大小为a，Combine需要g(n)时间，则递归式为：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">T(n)=bT(n/a)+f(n)+g(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><strong>算法导论思考题4-3（参数传递）</strong>能够很好的考察对于分治法的理解。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">就如归并排序，Divide的步骤为m=(p+q)/2，因此为O(1)，Combine步骤为merge()函数，Conquer步骤为分解为2个子问题，子问题大小为n/2，因此：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">归并排序的递归式：T(n)=2T(n/2)+O(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">而求解递归式的三种方法有：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">(1)替换法：主要用于验证递归式的复杂度。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">(2)递归树：能够大致估算递归式的复杂度，估算完后可以用替换法验证。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">(3)主定理：用于解一些常见的递归式。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">伪代码：</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220944_1498.png" alt=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><strong><u><span style="font-family:SimSun; font-size:14px">证明算法正确性：</span></u></strong></div>
+<div><strong><u><span style="font-family:SimSun; font-size:14px"><br>
+</span></u></strong></div>
+<div><span style="font-family:SimSun; font-size:14px">其实我们只要证明merge()函数的正确性即可。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">merge函数的主要步骤在第25~31行，可以看出是由一个循环构成。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">循环不变式：每次循环之前，A[p...k-1]已排序，且L[i]和R[j]是L和R中剩下的元素中最小的两个元素。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">初始：k=p，A[p...p-1]为空，因此已排序，成立。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">保持：在第k次迭代之前，A[p...k-1]已经排序，而因为L[i]和R[j]是L和R中剩下的元素中最小的两个元素，因此只需要将L[i]和R[j]中最小的元素放到A[k]即可，在第k+1次迭代之前A[p...k]已排序，且L[i]和R[j]为剩下的最小的两个元素。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">终止：k=q+1，且A[p...q]已排序，这就是我们想要的，因此证毕。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px">归并排序的例子：</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220947_3483.png" alt=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>问：归并排序的缺点是什么？</strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong><br>
+</strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px">答：他是Out-place sort，因此相比快排，需要很多额外的空间。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>问：为什么归并排序比快速排序慢？</strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px"><strong><br>
+</strong></span></div>
+<div><span style="font-family:SimSun; font-size:14px">答：虽然渐近复杂度一样，但是归并排序的系数比快排大。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px"><strong>问：对于归并排序有什么改进？</strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px">答：就是在数组长度为k时，用插入排序，因为插入排序适合对小数组排序。在算法导论思考题2-1中介绍了。复杂度为O(nk+nlg(n/k)) ，当k=O(lgn)时，复杂度为O(nlgn)</span></div>
+<div><br>
+</div>
+<h2><a name="t5"></a><span style="font-family:SimHei; font-size:22px"><strong>五、快速排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px">Tony Hoare爵士在1962年发明，被誉为“20世纪十大经典算法之一”。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">算法导论中讲解的快速排序的PARTITION是Lomuto提出的，是对Hoare的算法进行一些改变的，而算法导论7-1介绍了Hoare的快排。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">特性：unstable sort、In-place sort。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">最坏运行时间：当输入数组已排序时，时间为O(n^2)，当然可以通过随机化来改进（shuffle array 或者 randomized select pivot）,使得期望运行时间为O(nlgn)。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">最佳运行时间：O(nlgn)</span></div>
+<div><span style="font-family:SimSun; font-size:14px">快速排序的思想也是分治法。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">当输入数组的所有元素都一样时，不管是快速排序还是随机化快速排序的复杂度都为O(n^2)，而在算法导论第三版的思考题7-2中通过改变Partition函数，从而改进复杂度为O(n)。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">注意：只要partition的划分比例是常数的，则快排的效率就是O(nlgn)，比如当partition的划分比例为10000:1时（足够不平衡了），快排的效率还是O(nlgn)</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">“A killer adversary for quicksort”这篇文章很有趣的介绍了怎么样设计一个输入数组，使得quicksort运行时间为O(n^2)。</span></div>
+<div><span style="font-family:SimSun; font-size:14px"><br>
+</span></div>
+<div><span style="font-family:SimSun; font-size:14px">伪代码：</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/04698EAA89004492BC96482934447F1D/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220950_4864.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px">随机化partition的实现：</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/12042C4C721A40F4836BCDFD45BCCB61/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220952_7135.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px">改进当所有元素相同时的效率的Partition实现：</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/FF39313006374EBA8C13EE22DB943CA0/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220955_4418.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div><span style="font-family:SimSun; font-size:14px">对partition函数证明循环不变式：A[p...i]的所有元素小于等于pivot，A[i+1...j-1]的所有元素大于pivot。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">初始：i=p-1,j=p，因此A[p...p-1]=空，A[p...p-1]=空，因此成立。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">保持：当循环开始前，已知A[p...i]的所有元素小于等于pivot，A[i+1...j-1]的所有元素大于pivot，在循环体中，</span></div>
+<div><span style="font-family:SimSun; font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; -&nbsp;如果A[j]&gt;pivot，那么不动，j++，此时A[p...i]的所有元素小于等于pivot，A[i+1...j-1]的所有元素大于pivot。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;- 如果A[j]&lt;=pivot，则i++，A[i+1]&gt;pivot，将A[i+1]和A[j]交换后，A[P...i]保持所有元素小于等于pivot，而A[i+1...j-1]的所有元素大于pivot。</span></div>
+<div><span style="font-family:SimSun; font-size:14px">终止：j=r，因此A[p...i]的所有元素小于等于pivot，A[i+1...r-1]的所有元素大于pivot。</span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t6"></a><span style="font-family:SimHei; font-size:22px"><strong>六、堆排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">1964年Williams提出。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">特性：unstable sort、In-place sort。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最优时间：O(nlgn)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最差时间：O(nlgn)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">此篇文章介绍了堆排序的最优时间和最差时间的证明：<a href="http://blog.csdn.net/xiazdong/article/details/8193625" style="">http://blog.csdn.net/xiazdong/article/details/8193625</a>&nbsp;</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">思想：运用了最小堆、最大堆这个数据结构，而堆还能用于构建优先队列。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">优先队列应用于进程间调度、任务调度等。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">堆数据结构应用于Dijkstra、Prim算法。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220958_2074.png" alt=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">（1）证明build_max_heap的正确性：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">循环不变式：每次循环开始前，A[i+1]、A[i+2]、...、A[n]分别为最大堆的根。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">初始：i=floor(n/2)，则A[i+1]、...、A[n]都是叶子，因此成立。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">保持：每次迭代开始前，已知A[i+1]、A[i+2]、...、A[n]分别为最大堆的根，在循环体中，因为A[i]的孩子的子树都是最大堆，因此执行完MAX_HEAPIFY(A,i)后，A[i]也是最大堆的根，因此保持循环不变式。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">终止：i=0，已知A[1]、...、A[n]都是最大堆的根，得到了A[1]是最大堆的根，因此证毕。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">（2）证明heapsort的正确性：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">循环不变式：每次迭代前，A[i+1]、...、A[n]包含了A中最大的n-i个元素，且A[i+1]&lt;=A[i+2]&lt;=...&lt;=A[n]，且A[1]是堆中最大的。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">初始：i=n，A[n+1]...A[n]为空，成立。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">保持：每次迭代开始前，A[i+1]、...、A[n]包含了A中最大的n-i个元素，且A[i+1]&lt;=A[i+2]&lt;=...&lt;=A[n]，循环体内将A[1]与A[i]交换，因为A[1]是堆中最大的，因此A[i]、...、A[n]包含了A中最大的n-i+1个元素且A[i]&lt;=A[i+1]&lt;=A[i+2]&lt;=...&lt;=A[n]，因此保持循环不变式。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">终止：i=1，已知A[2]、...、A[n]包含了A中最大的n-1个元素，且A[2]&lt;=A[3]&lt;=...&lt;=A[n]，因此A[1]&lt;=A[2]&lt;=A[3]&lt;=...&lt;=A[n]，证毕。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t7"></a><span style="font-family:SimHei; font-size:22px"><strong>七、计数排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">特性：stable sort、out-place sort。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最坏情况运行时间：O(n+k)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最好情况运行时间：O(n+k)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">当k=O(n)时，计数排序时间为O(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">伪代码：</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/29A213EE7696418DBB6804190E7255B5/clipboard.png" alt="" style=""></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220962_8346.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t8"></a><span style="font-family:SimHei; font-size:22px"><strong>八、基数排序</strong></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">本文假定每位的排序是计数排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">特性：stable sort、Out-place sort。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最坏情况运行时间：O((n+k)d)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最好情况运行时间：O((n+k)d)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">当d为常数、k=O(n)时，效率为O(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">我们也不一定要一位一位排序，我们可以多位多位排序，比如一共10位，我们可以先对低5位排序，再对高5位排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum; color:rgb(255,0,0)"><span style="font-size:14px">引理：假设n个b位数，将b位数分为多个单元，且每个单元为r位，那么基数排序的效率为O[(b/r)(n+2^r)]。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum; color:rgb(255,0,0)"><span style="font-size:14px">当b=O(nlgn)，r=lgn时，基数排序效率O(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px"><br>
+</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">比如<strong>算法导论习题8.3-4</strong>：说明如何在O(n)时间内，对0~n^2-1之间的n个整数排序？</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">答案：将这些数化为2进制，位数为lg(n^2)=2lgn=O(lgn)，因此利用引理，b=O(lgn)，而我们设r=lgn，则基数排序可以在O(n)内排序。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">基数排序的例子：</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/159E3F112A284DAC8414B3659278CFEB/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220964_6225.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220967_7660.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/7966DB1022EF44EF98779EAC4ACCE720/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">通过循环不变式可证，证明略。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<h2><a name="t9"></a><span style="font-size:22px"><span style="font-family:SimHei"><strong>九、桶排序</strong></span></span></h2>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">假设输入数组的元素都在[0,1)之间。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><span style="font-family:NSimSum">特性：</span><span style="font-family:&#39;Times New Roman&#39;">out-place sort、stable sort</span><span style="font-family:NSimSum">。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最坏情况运行时间：当分布不均匀时，全部元素都分到一个桶中，则O(n^2)，当然[算法导论8.4-2]也可以将插入排序换成堆排序、快速排序等，这样最坏情况就是O(nlgn)。</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">最好情况运行时间：O(n)</span></span></div>
+<div style="font-family:微软雅黑"><span style="font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">桶排序的例子：</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/DA73A1003DE94E5C8FD69AC0510DC09C/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220969_9294.png" alt=""><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px">伪代码：</div>
+<div style="font-family:微软雅黑; font-size:14px"><img src="file:///C:/Users/xiazdong/AppData/Local/youdao/ynote/images/5F1AE5A15A45464C898EB83DDCE38A72/clipboard.png" alt="" style=""></div>
+<div style="font-family:微软雅黑; font-size:14px"><strong><span style="font-family:SimHei; font-size:14px"><br>
+</span></strong></div>
+<div style="font-family:微软雅黑; font-size:14px"><strong><span style="font-family:SimHei; font-size:14px"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1357220972_2232.png" alt=""><br>
+</span></strong></div>
+<div style="font-family:微软雅黑; font-size:14px"><strong><span style="font-family:SimHei; font-size:14px"><br>
+</span></strong></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:SimHei; font-size:14px"><strong><u>证明算法正确性：</u></strong></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><span style="font-family:NSimSum; font-size:14px"><br>
+</span></div>
+<div style="font-family:微软雅黑"><span style="font-family:NSimSum"><span style="font-size:14px">对于任意A[i]&lt;=A[j]，且A[i]落在B[a]，A[j]落在B[b]，我们可以看出a&lt;=b，因此得证。</span></span></div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+<div style="font-family:微软雅黑; font-size:14px"><br>
+</div>
+
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+<div class="bdsharebuttonbox bdshare-button-style0-16" style="float: right;" data-bd-bind="1413561292048">
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important"></a>
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important"></a>
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important"></a>
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important"></a>
+<a href="http://blog.csdn.net/xiazdong/article/details/8462393#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+<!--192.168.100.35-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/xiazdong/article/details/8451037&#39;;">上一篇</span><a href="http://blog.csdn.net/xiazdong/article/details/8451037" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">细数二十世纪最伟大的十大算法</a></li>
+            <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/xiazdong/article/details/8491622&#39;;">下一篇</span><a href="http://blog.csdn.net/xiazdong/article/details/8491622" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">渐近记号总结</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+        <div id="digg" articleid="8462393">
+            <dl id="btnDigg" class="digg digg_disable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_ding&#39;])">顶</dt>
+                <dd>12</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_cai&#39;])">踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95" target="_blank" class="blog-tage-red">排序算法</a> 
+                <a href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" target="_blank" class="blog-tage-red">数据结构</a> 
+                <a href="http://www.csdn.net/tag/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE" target="_blank" class="blog-tage-red">二分查找</a> 
+                <a href="http://www.csdn.net/tag/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6" target="_blank" class="blog-tage-red">任务调度</a> 
+                <a href="http://www.csdn.net/tag/%E5%A0%86%E6%8E%92%E5%BA%8F" target="_blank" class="blog-tage-red">堆排序</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/xhu_eternalcc/article/details/22274489" title="C++学习之深入理解虚函数--虚函数表解析" strategy="CFRecommendAlgorithm" target="_blank">C++学习之深入理解虚函数--虚函数表解析</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/blue4689/article/details/6599592" title="moto &amp; google笔试题目-STL/C++面试题" strategy="CFRecommendAlgorithm" target="_blank">moto &amp; google笔试题目-STL/C++面试题</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/youxin2012/article/details/17083261" title="KMP算法原理与实现（精简）" strategy="CFRecommendAlgorithm" target="_blank">KMP算法原理与实现（精简）</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/a564663276/article/details/8964155" title="Java内部类总结 （吐血之作）" strategy="CFRecommendAlgorithm" target="_blank">Java内部类总结 （吐血之作）</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/igiqoanw/article/details/38386815" title="面试经验" strategy="CFRecommendAlgorithm" target="_blank">面试经验</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/haoel/article/details/1383877" title="“抄袭事件”判决书" strategy="CFRecommendAlgorithm" target="_blank">“抄袭事件”判决书</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/verticallimit/article/details/24826009" title="自己选择的路、跪着也要走完" strategy="CFRecommendAlgorithm" target="_blank">自己选择的路、跪着也要走完</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/andycpp/article/details/8861549" title="“割绳子”的作者，你如此歧视、无视、鄙视中国人，这是何苦呢" strategy="CFRecommendAlgorithm" target="_blank">“割绳子”的作者，你如此歧视、无视、鄙视中国人，这是何苦呢</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/aeolus1019/article/details/7974430" title="Cannot make a static reference to the non-static method的解决方法" strategy="CFRecommendAlgorithm" target="_blank">Cannot make a static reference to the non-static method的解决方法</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wazhl/article/details/8173739" title="内存中堆栈" strategy="CFRecommendAlgorithm" target="_blank">内存中堆栈</a></dd></dl>
+
+<script type="text/javascript">
+    var searchtitletags = '九大排序算法再总结' + ',' + '排序算法,数据结构,二分查找,任务调度,堆排序';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+
+    <div id="ad_cen">
+   
+          <script type="text/javascript">
+              new Ad(4, 'ad_cen');
+          </script>
+    <iframe id="ad_frm_0" frameborder="0" scrolling="no" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ad(1).htm" style="border-width: 0px; overflow: hidden; width: 984px; height: 90px;"></iframe></div>
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_4315227"><dt class="comment_head" floor="5">5楼 <span class="user"><a class="username" href="http://blog.csdn.net/Windeal" target="_blank">轮子学长</a> <span class="ptime">2014-09-23 14:46发表</span>  <a href="http://blog.csdn.net/xiazdong/article/details/8462393#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4315227" username="Windeal"> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/Windeal" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/3_windeal.jpg" width="40" height="40"></a></dd><dd class="comment_body">学习了，谢谢分享</dd></dl><dl class="comment_item comment_topic" id="comment_item_4269465"><dt class="comment_head" floor="4">4楼 <span class="user"><a class="username" href="http://blog.csdn.net/u013705500" target="_blank">ice-frog</a> <span class="ptime">2014-09-11 19:30发表</span>  <a href="http://blog.csdn.net/xiazdong/article/details/8462393#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4269465" username="u013705500"> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/u013705500" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/3_u013705500.jpg" width="40" height="40"></a></dd><dd class="comment_body">学习了</dd></dl><dl class="comment_item comment_topic" id="comment_item_4112115"><dt class="comment_head" floor="3">3楼 <span class="user"><a class="username" href="http://blog.csdn.net/jmy99527" target="_blank">NO_小贾</a> <span class="ptime">2014-07-31 15:41发表</span>  <a href="http://blog.csdn.net/xiazdong/article/details/8462393#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4112115" username="jmy99527"> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/jmy99527" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/3_jmy99527.jpg" width="40" height="40"></a></dd><dd class="comment_body">楼主的堆排序中，对堆进行调整的伪代码写的有问题。<br>MAX_HEAPIFY(A,i)函数中的寻找largest点的时候，逻辑是错误的，应该是两个if语句，不应该是if......... else..........<br><br>因为我们是要找出来左右子树中最大的，进行替换。</dd></dl><dl class="comment_item comment_topic" id="comment_item_3749443"><dt class="comment_head" floor="2">2楼 <span class="user"><a class="username" href="http://blog.csdn.net/king_MCU" target="_blank">laughing_hou</a> <span class="ptime">2014-04-17 14:58发表</span>  <a href="http://blog.csdn.net/xiazdong/article/details/8462393#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3749443" username="king_MCU"> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/king_MCU" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/3_king_mcu.jpg" width="40" height="40"></a></dd><dd class="comment_body">快速排序的第19行代码是不是有问题？</dd></dl><dl class="comment_item comment_topic" id="comment_item_2552964"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/zhy006" target="_blank">zhy006</a> <span class="ptime">2013-03-13 17:48发表</span>  <a href="http://blog.csdn.net/xiazdong/article/details/8462393#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2552964" username="zhy006"> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/xiazdong/article/details/8462393#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/zhy006" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/3_zhy006.jpg" width="40" height="40"></a></dd><dd class="comment_body">因此冒泡排序的执行时间至少比插入排序快<br>这里错了，看的比较仔细，呵呵</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:csdn.showLogin(function (dat) {js_logined(dat.data.userName);});">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fxiazdong%2Farticle%2Fdetails%2F8462393">[注册]</a></div></div>
+
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8462393';
+    var commentscount = 6;
+    var islock = false
+</script>
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    <iframe id="ad_frm_1" frameborder="0" scrolling="no" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ad(2).htm" style="border-width: 0px; overflow: hidden; width: 984px; height: 0px;"></iframe></div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+      
+
+       <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);
+        
+
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/xiazdong" target="_blank">
+    <img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/1_xiazdong.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/xiazdong" class="user_name" target="_blank">xiazdong</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_guanzhu&#39;])"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=xiazdong&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+<div id="bms_box"><a href="http://medal.blog.csdn.net/allmedal.aspx" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/zhun_s.gif" onmouseover="m_over_m(this,0)" onmouseout="m_out_m()" alt=""></a><a href="http://medal.blog.csdn.net/allmedal.aspx" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/holdon_s2.gif" onmouseover="m_over_m(this,1)" onmouseout="m_out_m()" alt=""></a></div></div>
+<ul id="blog_rank">
+    <li>访问：<span>878691次</span></li>
+    <li>积分：<span>13802分</span></li>
+    <li>排名：<span>第238名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>443篇</span></li>
+    <li>转载：<span>47篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>426条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="custom_column_21075040" class="panel">
+<ul class="panel_head"><span>google搜索</span></ul>
+<ul class="panel_body">
+
+
+<form target="google_window" action="http://www.google.com/custom" method="get">
+
+
+<table bgcolor="#ffffff">
+<tbody>
+<tr>
+<td valign="top" nowrap="nowrap" height="32" align="left"><a href="http://www.google.com/"></a><input type="text" id="sbi" value="" maxlength="255" size="15" name="q">
+<input type="submit" id="sbb" value="搜索" name="sa"> <input type="hidden" value="pub-9385611094500160" name="client">
+<input type="hidden" value="1" name="forid"> <input type="hidden" value="5336492578" name="channel">
+<input type="hidden" value="GB2312" name="ie"> <input type="hidden" value="GB2312" name="oe">
+<input type="hidden" value="GALT:#9A2C06;GL:1;DIV:#33FFFF;VLC:D03500;AH:center;BGC:99CCFF;LBGC:CCE5F9;ALC:440066;LC:440066;T:336699;GFNT:223472;GIMP:223472;FORID:1" name="cof">
+<input type="hidden" value="zh-CN" name="hl"> </td>
+</tr>
+</tbody>
+</table>
+</form>
+
+</ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/854591" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Java】</a><span>(74)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1270511" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【算法导论】</a><span>(40)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/899022" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Java Web】</a><span>(35)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1106409" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android】</a><span>(51)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1123086" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Linux】</a><span>(31)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1135154" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【数据库】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1145796" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Hibernate】</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1071427" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Struts2】</a><span>(11)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1187249" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【ABAP】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1066536" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Tips】</a><span>(26)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1080968" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【XML】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1085223" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【数据结构】</a><span>(14)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/877138" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【《java》解惑】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1412675" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【LaTeX】</a><span>(15)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1214648" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【JMeter】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1226802" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Machine Learning】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/801556" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【操作系统】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/805524" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【pintos】</a><span>(11)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1060259" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【信息检索】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/925509" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【软件工程】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/796710" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Iphone/Ipad开发】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/813426" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【《SQL解惑》读书笔记】</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/848946" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【编码】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/893815" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Html、XHtml、CSS】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/901505" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Java实现五子棋游戏】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/911383" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【IBM AIX】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1090867" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Eclipse】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1090869" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【开源工具】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1090872" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【转载文章】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1105450" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【BaiduMap】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/xiazdong/article/category/1107403" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【C/C++】</a><span>(1)</span>
+            </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/xiazdong/article/month/2013/05">2013年05月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2013/02">2013年02月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2013/01">2013年01月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/12">2012年12月</a><span>(27)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/11">2012年11月</a><span>(10)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/10">2012年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/09">2012年09月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/08">2012年08月</a><span>(33)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/07">2012年07月</a><span>(51)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/06">2012年06月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/05">2012年05月</a><span>(20)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/04">2012年04月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/03">2012年03月</a><span>(25)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/02">2012年02月</a><span>(22)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2012/01">2012年01月</a><span>(30)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/12">2011年12月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/11">2011年11月</a><span>(21)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/10">2011年10月</a><span>(29)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/09">2011年09月</a><span>(18)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/08">2011年08月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/07">2011年07月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/06">2011年06月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/05">2011年05月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/04">2011年04月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/03">2011年03月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2011/02">2011年02月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2010/12">2010年12月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2010/10">2010年10月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2010/09">2010年09月</a><span>(27)</span></li><li><a href="http://blog.csdn.net/xiazdong/article/month/2010/08">2010年08月</a><span>(10)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7059573" title="JSON for java入门总结">JSON for java入门总结</a><span>(30229)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7217022" title="Servlet 中文乱码问题及解决方案剖析">Servlet 中文乱码问题及解决方案剖析</a><span>(26929)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7208316" title="Servlet 3.0 新特性详解">Servlet 3.0 新特性详解</a><span>(20791)</span>
+</li>
+<li>
+<a href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET.htm" title="九大排序算法再总结">九大排序算法再总结</a><span>(18209)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7523331" title="用U盘安装Linux图解">用U盘安装Linux图解</a><span>(16316)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/8892105" title="【LaTeX入门】05、换行、换段、换页、首行缩进等命令">【LaTeX入门】05、换行、换段、换页、首行缩进等命令</a><span>(14799)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7768807" title="Android入门：广播发送者与广播接收者">Android入门：广播发送者与广播接收者</a><span>(12812)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7950084" title="机器学习入门：线性回归及梯度下降">机器学习入门：线性回归及梯度下降</a><span>(12485)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7210603" title="Win7 自制关闭屏幕快捷键">Win7 自制关闭屏幕快捷键</a><span>(12143)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7381142" title="百度地图API学习总结">百度地图API学习总结</a><span>(11026)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7059573" title="JSON for java入门总结">JSON for java入门总结</a><span>(46)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/6954446" title="Java反射研究（3）">Java反射研究（3）</a><span>(35)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7217022" title="Servlet 中文乱码问题及解决方案剖析">Servlet 中文乱码问题及解决方案剖析</a><span>(29)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7208316" title="Servlet 3.0 新特性详解">Servlet 3.0 新特性详解</a><span>(24)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7381142" title="百度地图API学习总结">百度地图API学习总结</a><span>(15)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7950084" title="机器学习入门：线性回归及梯度下降">机器学习入门：线性回归及梯度下降</a><span>(15)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7713419" title="Android入门：增删改查通讯录">Android入门：增删改查通讯录</a><span>(13)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/6895465" title="JavaBean中DAO设计模式介绍">JavaBean中DAO设计模式介绍</a><span>(10)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/7775179" title="搭建ABAP开发环境图解">搭建ABAP开发环境图解</a><span>(9)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/xiazdong/article/details/6302523" title="第0讲：pintos概论">第0讲：pintos概论</a><span>(7)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"><iframe id="ad_frm_2" frameborder="0" scrolling="no" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ad.htm" style="border-width: 0px; overflow: hidden; width: 194px; height: 200px;"></iframe></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="custom_column_20463214" class="panel">
+<ul class="panel_head"><span>推荐博客</span></ul>
+<ul class="panel_body">
+
+<a href="http://blog.csdn.net/cheny_com?viewmode=contents">陈勇敏捷开发博客</a>
+
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</script><script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/pub_footer_2012.css"><div id="pub_footerall" class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a>|<a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a>|<a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd><a href="http://wpa.qq.com/msgrd?v=3&uin=2355263776&site=qq&menu=yes" target="_blank" class="qq">网站客服</a> <a href="http://wpa.qq.com/msgrd?v=3&uin=2251809102&site=qq&menu=yes" target="_blank" class="qq">杂志客服</a> <a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a> <a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a> <span class="phone" title="服务热线">400-600-2320</span></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd>江苏乐知网络技术有限公司 提供商务支持</dd><dd>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display: none; position: absolute; z-index: 9990; width: 170px;">  <iframe src="about:blank" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/notify.js"></script>
+    <script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/msg.popup.js"></script>
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/ad-blog.js"></script>
+<script type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/count.js"></script><iframe src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/logs.htm" frameborder="0" width="0" height="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./九大排序算法再总结 - xiazdong - 博客频道 - CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+
+
+<div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div></body></html>
