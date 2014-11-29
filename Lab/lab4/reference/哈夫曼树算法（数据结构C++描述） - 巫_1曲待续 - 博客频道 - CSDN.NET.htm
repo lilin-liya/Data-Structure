@@ -1,0 +1,1142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0052)http://blog.csdn.net/wwj_748/article/details/7015630 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" async="" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ga.js"></script><script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/repoAddr.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/tracking.js" charset="utf-8"></script>  
+
+    <script id="allmobilize" charset="utf-8" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/allmobilize.min.js"></script><style type="text/css"></style>
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/wwj_748/article/details/7015630#">
+
+    <title>哈夫曼树算法（数据结构C++描述） - 巫_1曲待续
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="//哈夫曼树算法#includeusing namespace std;const int n=5;const int m=2*n-1;const int float_max=20;typedef int datatype;typedef struct {	float weight;			//定义权重	int parent;				//定义双亲在向量中的下标	int lchi">
+    <script src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/wwj_748/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+
+<script src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/share.js"></script><script type="text/javascript" charset="utf-8" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/main.js"></script><link href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><link rel="stylesheet" type="text/css" href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/style(1).css"><script charset="utf-8" async="" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/sm.min.js"></script><link rel="stylesheet" type="text/css" href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/style(2).css"><script src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/logger.js"></script><style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style><link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style0_16.css?v=f4b44e79.css"></head>
+<body><iframe frameborder="0" style="display: none;"></iframe>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap ">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display: none;" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"><div class="icon-hasnotes" style="display: none;"></div></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note" style="display: none;">                      <div class="box"><div class="notifications notice_list_con curr">  <div class="menu_title">    <span class="title"><a href="http://msg.csdn.net/" target="_blank" class="read_all">全部设为已读</a><a href="http://msg.csdn.net/" target="_blank" class="go_all">查看所有通知</a></span>  </div>  <div class="loading"></div>  <div class="empty">暂没有新通知</div>  <div class="notice_content"></div></div><div class="notifications detail_con" style="display: none">  <div class="menu_title">    <span class="title">      <a class="go_back" href="javascript:void 0;">返回通知列表</a>      <a class="notifications_page_none nextnote" href="javascript:void 0;">下一条</a>      <a class="notifications_page prvnote" href="javascript:void 0;">上一条</a>    </span>  </div>  <div class="notice_content"></div></div><div class="error"></div></div>                    <iframe src="about:block" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/2_ll_lilin.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/2_ll_lilin.jpg"></a></dt>                        <dd class="info"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname">LL_Lilin</a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-right "><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/wwj_748">巫_1曲待续</a></h2>
+            <h3>一个人走到任何境地全都是因为自己。</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/wwj_748?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/wwj_748?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/wwj_748/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "wwj_748";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/wwj_748";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "LL_Lilin";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://bbs.csdn.net/topics/390812950?page=5#post-398523062" target="_blank">
+<font color="blue">博客专家福利
+</font></a>
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://bbs.csdn.net/topics/390936728" target="_blank">
+<font color="red">C币兑换礼品剧透</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/41079173" target="_blank">
+<font color="blue">10月推荐文章汇总
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://bbs.csdn.net/topics/390935186" target="_blank">
+<font color="red">加入“技术热心人”，赢丰厚奖品
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+</div>                        </div>
+                        
+
+  
+<link href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/main(1).js"></script>
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET.htm">
+        哈夫曼树算法（数据结构C++描述）
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/wwj_748/article/category/886048" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">【大学课程之数据结构】</a> 
+        </span>
+    <span class="link_postdate">2011-11-26 22:28</span>
+    <span class="link_view" title="阅读次数">893人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/wwj_748/article/details/7015630#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shoucang&#39;]);collectArticle(&#39;哈夫曼树算法（数据结构C++描述）&#39;,&#39;7015630&#39;);return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="http://blog.csdn.net/wwj_748/article/details/7015630#report" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_jubao&#39;]);report(7015630,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href="http://www.csdn.net/tag/%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">数据结构</a><a href="http://www.csdn.net/tag/%e7%ae%97%e6%b3%95" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">算法</a><a href="http://www.csdn.net/tag/c%2b%2b" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">c++</a><a href="http://www.csdn.net/tag/float" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">float</a><a href="http://www.csdn.net/tag/%e6%b5%8b%e8%af%95" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">测试</a><a href="http://www.csdn.net/tag/struct" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">struct</a></div>
+
+  
+    
+<div id="article_content" class="article_content">
+
+<div class="dp-highlighter bg_cpp"><div class="bar"><div class="tools"><b>[cpp]</b> <a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 581px; top: 480px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-cpp"><li class="alt"><span><span class="comment">//哈夫曼树算法</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="preprocessor">#include&lt;iostream&gt;</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">using</span><span>&nbsp;</span><span class="keyword">namespace</span><span>&nbsp;std;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">const</span><span>&nbsp;</span><span class="datatypes">int</span><span>&nbsp;n=5;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">const</span><span>&nbsp;</span><span class="datatypes">int</span><span>&nbsp;m=2*n-1;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">const</span><span>&nbsp;</span><span class="datatypes">int</span><span>&nbsp;float_max=20;&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">typedef</span><span>&nbsp;</span><span class="datatypes">int</span><span>&nbsp;datatype;&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">typedef</span><span>&nbsp;</span><span class="keyword">struct</span><span>&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt"><span>{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">float</span><span>&nbsp;weight;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//定义权重</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">int</span><span>&nbsp;parent;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//定义双亲在向量中的下标</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">int</span><span>&nbsp;lchild,rchild;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//定义左右子树</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>}&nbsp;&nbsp;&nbsp;nodetype;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//结点类型</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">typedef</span><span>&nbsp;nodetype&nbsp;hftree[m];&nbsp;</span><span class="comment">//哈夫曼树类型，数组从0号单元开始使用</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>hftree&nbsp;T;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//哈夫曼树向量</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="comment">//哈夫曼树的构造</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">void</span><span>&nbsp;huffman(hftree&nbsp;T)&nbsp;&nbsp;</span></span></li><li class="alt"><span>{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">int</span><span>&nbsp;i,j,p1,p2;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="datatypes">float</span><span>&nbsp;small1,small2;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(i=0;i&lt;n;i++)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//初始化</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].parent=-1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//无双亲，即为根结点，尚未合并过</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].lchild=T[i].rchild=-1;<span class="comment">//左右孩子指针置为-1</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(i=0;i&lt;n;i++)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cin&gt;&gt;T[i].weight;&nbsp;&nbsp;&nbsp;<span class="comment">//输入n个叶子的权</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(i=n;i&lt;m;i++)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//进行n-1次合并，产生n-1个新结点</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p1=p2=-1;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small1=small2=float_max;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//float_max为float类型的最大值</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(j=0;j&lt;=i-1;j++)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(T[j].parent!=-1)&nbsp;</span><span class="keyword">continue</span><span>;</span><span class="comment">//不考虑已合并过的点</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>(T[j].weight&lt;small1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//修改最小权和次小权及位置</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small2=small1;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small1=T[j].weight;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p2=p1;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p1=j;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><span>&nbsp;</span><span class="keyword">if</span><span>(T[j].weight&lt;small2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">//修改次小权及位置</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;small2=T[j].weight;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p2=j;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[p1].parent=T[p2].parent=i;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//新根</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].parent=-1;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].lchild=p1;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].rchild=p2;&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[i].weight=small1+small2;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//新结点的权值为最小权与次小权之和</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class="alt"><span>}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="datatypes">int</span><span>&nbsp;main()&nbsp;&nbsp;</span></span></li><li class=""><span>{&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;hftree&nbsp;T;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎测试！！！！&nbsp;&nbsp;&nbsp;"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"----------测试开始-----------"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"首先调用哈夫曼树构造的函数：huffman"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"按下标顺序输入叶子的权重:"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"&nbsp;0&nbsp;&nbsp;1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6&nbsp;&nbsp;7&nbsp;&nbsp;8&nbsp;"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;huffman(T);&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"输出合并后的哈夫曼树的所有结点："</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;<span class="string">"&nbsp;0&nbsp;&nbsp;1&nbsp;&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;4&nbsp;&nbsp;5&nbsp;&nbsp;6&nbsp;&nbsp;7&nbsp;&nbsp;8&nbsp;"</span><span>&lt;&lt;endl;&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span><span>(</span><span class="datatypes">int</span><span>&nbsp;i=0;i&lt;m;i++)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cout&lt;&lt;T[i].weight&lt;&lt;<span class="string">"&nbsp;&nbsp;"</span><span>;&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;system(<span class="string">"pause"</span><span>);&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;0;&nbsp;&nbsp;</span></span></li><li class=""><span>}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="cpp" style="display: none;">//哈夫曼树算法
+#include&lt;iostream&gt;
+using namespace std;
+const int n=5;
+const int m=2*n-1;
+const int float_max=20;
+typedef int datatype;
+typedef struct 
+{
+	float weight;			//定义权重
+	int parent;				//定义双亲在向量中的下标
+	int lchild,rchild;		//定义左右子树
+}	nodetype;				//结点类型
+typedef nodetype hftree[m]; //哈夫曼树类型，数组从0号单元开始使用
+hftree T;					//哈夫曼树向量
+
+//哈夫曼树的构造
+void huffman(hftree T)
+{
+	int i,j,p1,p2;
+	float small1,small2;
+	for(i=0;i&lt;n;i++)        //初始化
+	{
+		T[i].parent=-1;		//无双亲，即为根结点，尚未合并过
+		T[i].lchild=T[i].rchild=-1;//左右孩子指针置为-1
+	}
+	for(i=0;i&lt;n;i++)
+	{
+		cin&gt;&gt;T[i].weight;   //输入n个叶子的权
+	}
+	for(i=n;i&lt;m;i++)		//进行n-1次合并，产生n-1个新结点
+	{
+		p1=p2=-1;
+		small1=small2=float_max;	//float_max为float类型的最大值
+		for(j=0;j&lt;=i-1;j++)
+		{
+			if(T[j].parent!=-1) continue;//不考虑已合并过的点
+			if(T[j].weight&lt;small1)			//修改最小权和次小权及位置
+			{
+				small2=small1;
+				small1=T[j].weight;
+				p2=p1;
+				p1=j;
+			}
+			else if(T[j].weight&lt;small2)		//修改次小权及位置
+			{
+				small2=T[j].weight;
+				p2=j;
+			}
+		}
+		T[p1].parent=T[p2].parent=i;		//新根
+		T[i].parent=-1;
+		T[i].lchild=p1;
+		T[i].rchild=p2;
+		T[i].weight=small1+small2;			//新结点的权值为最小权与次小权之和
+	}
+}
+
+int main()
+{
+	hftree T;
+	cout&lt;&lt;"          欢迎测试！！！！   "&lt;&lt;endl;
+	cout&lt;&lt;"----------测试开始-----------"&lt;&lt;endl;
+	cout&lt;&lt;"首先调用哈夫曼树构造的函数：huffman"&lt;&lt;endl;
+	cout&lt;&lt;"按下标顺序输入叶子的权重:"&lt;&lt;endl;
+	cout&lt;&lt;" 0  1  2  3  4  5  6  7  8 "&lt;&lt;endl;
+	huffman(T);
+	cout&lt;&lt;"输出合并后的哈夫曼树的所有结点："&lt;&lt;endl;
+	cout&lt;&lt;" 0  1  2  3  4  5  6  7  8 "&lt;&lt;endl;
+	for(int i=0;i&lt;m;i++)
+	{ 
+		cout&lt;&lt;T[i].weight&lt;&lt;"  ";
+	}
+	system("pause");
+	return 0;
+}</pre><br>
+
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+<div class="bdsharebuttonbox bdshare-button-style0-16" style="float: right;" data-bd-bind="1417268109501">
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important"></a>
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important"></a>
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important"></a>
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important"></a>
+<a href="http://blog.csdn.net/wwj_748/article/details/7015630#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+<!--192.168.100.35-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/wwj_748/article/details/7014970&#39;;">上一篇</span><a href="http://blog.csdn.net/wwj_748/article/details/7014970" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">百分制转换为五分制的算法</a></li>
+            <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/wwj_748/article/details/7016669&#39;;">下一篇</span><a href="http://blog.csdn.net/wwj_748/article/details/7016669" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">汇编程序语言设计复习题整理</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+        <div id="digg" articleid="7015630">
+            <dl id="btnDigg" class="digg digg_enable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_ding&#39;])">顶</dt>
+                <dd>0</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_enable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_cai&#39;])">踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" target="_blank" class="blog-tage-red">数据结构</a> 
+                <a href="http://www.csdn.net/tag/%E7%AE%97%E6%B3%95" target="_blank" class="blog-tage-red">算法</a> 
+                <a href="http://www.csdn.net/tag/c++" target="_blank" class="blog-tage-red">c++</a> 
+                <a href="http://www.csdn.net/tag/namespace" target="_blank" class="blog-tage-red">namespace</a> 
+                <a href="http://www.csdn.net/tag/%E5%90%88%E5%B9%B6" target="_blank" class="blog-tage-red">合并</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/vagrxie/article/details/4267515" title="《数据结构与算法分析C++描述》 搜索二叉树的C++实现" strategy="SearchAlgorithm" target="_blank">《数据结构与算法分析C++描述》 搜索二叉树的C++实现</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/dingxingmei/article/details/16120123" title="大话数据结构--哈夫曼树" strategy="SearchAlgorithm" target="_blank">大话数据结构--哈夫曼树</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/yanheven1/article/details/16824619" title="《信息学竞赛指导》参考答案" strategy="SearchAlgorithm" target="_blank">《信息学竞赛指导》参考答案</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/u012055579/article/details/38168167" title="数据结构之哈夫曼树" strategy="SearchAlgorithm" target="_blank">数据结构之哈夫曼树</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/sunhui8888/article/details/6633974" title="入门 ACMer 养成计划(转)" strategy="SearchAlgorithm" target="_blank">入门 ACMer 养成计划(转)</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/siliang13/article/details/24196693" title="数据结构-哈夫曼树-数据传输" strategy="SearchAlgorithm" target="_blank">数据结构-哈夫曼树-数据传输</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/zdp072/article/details/15027477" title="大话数据结构十六：哈夫曼树(最优二叉树)" strategy="SearchAlgorithm" target="_blank">大话数据结构十六：哈夫曼树(最优二叉树)</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/mvpsendoh/article/details/6159731" title="《数据结构与算法分析 c++描述》 读书笔记 第一章" strategy="SearchAlgorithm" target="_blank">《数据结构与算法分析 c++描述》 读书笔记 第一章</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wxg694175346/article/details/8301329" title="[C++]数据结构：使用最小堆创建霍夫曼编码树HuffmanTree的过程" strategy="SearchAlgorithm" target="_blank">[C++]数据结构：使用最小堆创建霍夫曼编码树HuffmanTree的过程</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/chimomo/article/details/7711745" title="数据结构 - 二叉树的广度优先遍历算法（C++）" strategy="SearchAlgorithm" target="_blank">数据结构 - 二叉树的广度优先遍历算法（C++）</a></dd></dl>
+
+<script type="text/javascript">
+    var searchtitletags = '哈夫曼树算法（数据结构C++描述）' + ',' + '数据结构,算法,c++,namespace,合并';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+
+    <div id="ad_cen">
+   
+          <script type="text/javascript">
+              new Ad(4, 'ad_cen');
+          </script>
+    <iframe id="ad_frm_0" frameborder="0" scrolling="no" src="about:blank" style="border-width: 0px; overflow: hidden; width: 988px; height: 90px;"></iframe></div>
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form"><a name="commentbox"></a><a name="reply"></a><a name="quote"></a><form action="http://blog.csdn.net/wwj_748/comment/submit?id=7015630" method="post" onsubmit="return subform(this);"><div class="commentform"><div class="panel_head">发表评论</div><ul><li class="left">用 户 名：</li><li class="right">LL_Lilin</li></ul><ul><li class="left">评论内容：</li><li class="right" style="position:relative;"><div id="ubbtools"><a href="http://blog.csdn.net/wwj_748/article/details/7015630#insertcode" code="code"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/code.gif" border="0" alt="插入代码" title="插入代码"></a></div><div id="lang_list" style="position: absolute; top: 28px; left: 0px; display: none;"><a class="long_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#html">HTML/XML</a><a class="long_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#objc">objective-c</a><a class="zhong_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#delphi">Delphi</a><a class="zhong_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#ruby">Ruby</a><a href="http://blog.csdn.net/wwj_748/article/details/7015630#php">PHP</a><a class="duan_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#csharp">C#</a><a style=" border-right: none;" class="duan_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#cpp">C++</a><a style=" border-bottom:none;" class="long_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#javascript">JavaScript</a><a style=" border-bottom:none;" class="long_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#vb">Visual Basic</a><a style=" border-bottom:none;" class="zhong_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#python">Python</a><a style=" border-bottom:none;" class="zhong_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#java">Java</a><a style="border-bottom:none;" class="duan_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#css">CSS</a><a style="border-bottom:none;" class="duan_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#sql">SQL</a><a style="border:none;" class="duan_name" href="http://blog.csdn.net/wwj_748/article/details/7015630#plain">其它</a></div><textarea class="comment_content" name="comment_content" id="comment_content" style="width: 400px; height: 200px;"></textarea></li></ul><ul><input type="hidden" id="comment_replyId" name="comment_replyId"><input type="hidden" id="comment_userId" name="comment_userId" value="521203"><input type="hidden" id="commentId" name="commentId" value=""><input type="submit" class="comment_btn" value="提交">&nbsp;&nbsp;<span id="tip_comment" style="color: Red; display: none;"></span></ul></div></form></div>
+
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '7015630';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    <iframe id="ad_frm_1" frameborder="0" scrolling="no" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ad(1).htm" style="border-width: 0px; overflow: hidden; width: 988px; height: 0px;"></iframe></div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);
+        
+        /*
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+        */
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }    
+
+</script>
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/wwj_748" target="_blank">
+    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/1_wwj_748.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/wwj_748" class="user_name" target="_blank">IT_xiao小巫</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_guanzhu&#39;])"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=wwj_748&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                       <div class="ico_expert" title="CSDN认证专家" style="width:54px;height:60px;background:url(&#39;http://csdnimg.cn/jifen/images/xunzhang/xunzhang/bokezhuanjiamiddle.png&#39;) no-repeat"></div>
+                <div id="bms_box">
+                                            <a target="_blank">
+                                                    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/zhuanlandaren.png" onmouseover="m_over_m(this,2)" onmouseout="m_out_m()" alt="4">
+                                            </a>
+                                            <a target="_blank">
+                                                    <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/chizhiyiheng.png" onmouseover="m_over_m(this,4)" onmouseout="m_out_m()" alt="1">
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>917138次</span></li>
+    <li>积分：<span>15246</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/blog7.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：15246 </div>
+        </span>  </li>
+    <li>排名：<span>第209名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>541篇</span></li>
+    <li>转载：<span>81篇</span></li>
+    <li>译文：<span>2篇</span></li>
+    <li>评论：<span>1179条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>博客专栏</span></ul>
+    <ul class="panel_body" id="sp_column">
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/csdn-blog-client.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20141009230920328.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/csdn-blog-client.html" target="_blank">小巫CSDN博客客户端开发教程</a>
+    <p>文章：8篇</p>
+    <span>阅读：18994</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/wwj-cocos2dx-lua.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20140622171713453.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/wwj-cocos2dx-lua.html" target="_blank">Cocos2d-x - Lua游戏开发入门</a>
+    <p>文章：7篇</p>
+    <span>阅读：14739</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/custom-component.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20140429140829328.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/custom-component.html" target="_blank">Android自定义组件</a>
+    <p>文章：11篇</p>
+    <span>阅读：19646</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/wwj-contact-develop.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20140113112526656.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/wwj-contact-develop.html" target="_blank">Android通许录模块开发精要</a>
+    <p>文章：11篇</p>
+    <span>阅读：36086</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/wwj-sina-weibo.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20131010182827625.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/wwj-sina-weibo.html" target="_blank">新浪微博客户端开发</a>
+    <p>文章：10篇</p>
+    <span>阅读：27106</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/wwjheadfirst.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20130708214923062.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/wwjheadfirst.html" target="_blank">Head First 设计模式学习记录</a>
+    <p>文章：13篇</p>
+    <span>阅读：12436</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/simplebeautymusicpla.html" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/20130706102627203.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/simplebeautymusicpla.html" target="_blank">Android--简、美音乐播放器开发过程</a>
+    <p>文章：13篇</p>
+    <span>阅读：108658</span>
+    </td>
+    </tr></tbody></table>
+    </ul>
+</div>
+
+<div id="custom_column_22884435" class="panel">
+<ul class="panel_head"><span>最近动态</span></ul>
+<ul class="panel_body">
+<p><span style="color:rgb(255,0,0)">近期动态：<br>
+</span><span style="color:rgb(102,51,255)">1.2014年6月20日正式毕业<br>
+2. Cocos2d-x 学习<br>
+3. Lua语言开发游戏<br>
+4. 学习新知识ing<br>
+
+</span></p>
+<p><span style="color:rgb(255,0,0)">相关说明：<br>
+</span><span style="color:rgb(102,51,255)">1.感谢网友的关注,小巫会继续分享技术和知识<br>
+2. 2014年，小巫已经毕业，会继续坚持写博客，与君共勉<br>
+3. 移动开发狂热者，有兴趣可以加入我们：299402133 <br>
+4. 个人博客站点：http://9520wwj.sinaapp.com/
+</span></p>
+</ul>
+</div>
+<div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2547719" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【小巫CSDN博客客户端开发】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1529925" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android新浪微博客户端开发】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1414168" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android应用-简、美音乐播放器】</a><span>(13)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1342194" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【 Android应用-小巫新闻客户端】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1119319" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android开发学习之路】</a><span>(118)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1415838" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android多媒体开发系列】</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1572115" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android UI效果锦集】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1833855" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android开发记录】</a><span>(23)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2063969" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android SDK开发】</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1773747" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android设计模式系列】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1845765" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android通讯录模块开发】</a><span>(11)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1846803" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android自定义组件】</a><span>(12)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1863541" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Android Design翻译】</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2143091" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【cocos2d-x】</a><span>(38)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1399759" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【2013年求职之路-小巫的面试宝典】</a><span>(14)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2293377" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Lua脚本语言】</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1401254" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【技能提升之设计模式】</a><span>(13)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1081018" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【成长记录之记录点滴】</a><span>(63)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1935343" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【网络协议】</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1908067" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Go语言程序设计】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2173325" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【IPhone开发】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2198515" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【PHP服务端】</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2213443" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Unity 3D】</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/2225849" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【建站经验】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1833927" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">&lt;----------大学分割线---------&gt;</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1092985" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【Java语言程序设计】</a><span>(50)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/893192" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【C++ Primer的学习】</a><span>(31)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/886046" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【C++语言程序设计】</a><span>(27)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1355011" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【PHP语言程序设计】</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1235229" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【C#语言程序设计】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1305701" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【操作系统之Linux】</a><span>(10)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1242648" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【SQL Server 数据库】</a><span>(18)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1287243" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【脚本语言之JavaScript】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1325327" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之计算机网络】</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1440029" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之软件工程】</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1342012" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之ASP.Net】</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1342011" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【ASP.Net之ADO.Net】</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/886048" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之数据结构】</a><span>(27)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1160170" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学学科杂货】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1242647" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之Java EE】</a><span>(10)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1358154" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之算法分析与设计】</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1307625" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学课程之编译原理】</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/wwj_748/article/category/1881325" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">【大学本科毕业设计专题】</a><span>(4)</span>
+            </li>
+</ul>
+</div><div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/11">2014年11月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/10">2014年10月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/09">2014年09月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/08">2014年08月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/07">2014年07月</a><span>(11)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/06">2014年06月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/05">2014年05月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/04">2014年04月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/03">2014年03月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/02">2014年02月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2014/01">2014年01月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/12">2013年12月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/11">2013年11月</a><span>(23)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/10">2013年10月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/09">2013年09月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/08">2013年08月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/07">2013年07月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/06">2013年06月</a><span>(17)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/05">2013年05月</a><span>(28)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/04">2013年04月</a><span>(18)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/03">2013年03月</a><span>(20)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/02">2013年02月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2013/01">2013年01月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/12">2012年12月</a><span>(20)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/11">2012年11月</a><span>(13)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/10">2012年10月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/09">2012年09月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/08">2012年08月</a><span>(23)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/07">2012年07月</a><span>(18)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/06">2012年06月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/05">2012年05月</a><span>(36)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/04">2012年04月</a><span>(27)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/03">2012年03月</a><span>(47)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/02">2012年02月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2012/01">2012年01月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2011/12">2011年12月</a><span>(28)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2011/11">2011年11月</a><span>(33)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2011/10">2011年10月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/wwj_748/article/month/2011/09">2011年09月</a><span>(13)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/10079311" title="Android UI-开源框架ImageLoader的完美例子">Android UI-开源框架ImageLoader的完美例子</a><span>(44467)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/9256251" title="Android应用--简、美音乐播放器原型放送（作者：小巫）">Android应用--简、美音乐播放器原型放送（作者：小巫）</a><span>(20018)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8927784" title="Android自定义照相机实现（拍照、保存到SD卡，利用Bundle在Acitivity交换数据）">Android自定义照相机实现（拍照、保存到SD卡，利用Bundle在Acitivity交换数据）</a><span>(19872)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8902071" title="Android应用开发--MP3音乐播放器代码实现（一）">Android应用开发--MP3音乐播放器代码实现（一）</a><span>(18827)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8975624" title="Android应用开发--MP3音乐播放器代码实现（二）">Android应用开发--MP3音乐播放器代码实现（二）</a><span>(12259)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8581977" title="基于Android的小巫新闻客户端开发--主界面业务逻辑实现">基于Android的小巫新闻客户端开发--主界面业务逻辑实现</a><span>(11702)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8868640" title="Android面试题收集（有详细答案）">Android面试题收集（有详细答案）</a><span>(11191)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8899699" title="Android应用开发--MP3音乐播放器界面设计（1）">Android应用开发--MP3音乐播放器界面设计（1）</a><span>(11103)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8581906" title="基于Android的小巫新闻客户端开发--UI设计（主界面）">基于Android的小巫新闻客户端开发--UI设计（主界面）</a><span>(9511)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8991091" title="Android应用开发--MP3音乐播放器Service实现">Android应用开发--MP3音乐播放器Service实现</a><span>(9023)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/9256251" title="Android应用--简、美音乐播放器原型放送（作者：小巫）">Android应用--简、美音乐播放器原型放送（作者：小巫）</a><span>(118)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/29068171" title="大学毕业初感悟">大学毕业初感悟</a><span>(92)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/10079311" title="Android UI-开源框架ImageLoader的完美例子">Android UI-开源框架ImageLoader的完美例子</a><span>(62)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/39134151" title="Android应用开发-小巫CSDN博客客户端开发开篇">Android应用开发-小巫CSDN博客客户端开发开篇</a><span>(42)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8581977" title="基于Android的小巫新闻客户端开发--主界面业务逻辑实现">基于Android的小巫新闻客户端开发--主界面业务逻辑实现</a><span>(32)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8619417" title="基于Android的小巫新闻客户端开发---显示新闻详细内容业务逻辑实现">基于Android的小巫新闻客户端开发---显示新闻详细内容业务逻辑实现</a><span>(31)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8975624" title="Android应用开发--MP3音乐播放器代码实现（二）">Android应用开发--MP3音乐播放器代码实现（二）</a><span>(28)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/19042325" title="Android 友盟社会化组件-分享实现">Android 友盟社会化组件-分享实现</a><span>(27)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8902071" title="Android应用开发--MP3音乐播放器代码实现（一）">Android应用开发--MP3音乐播放器代码实现（一）</a><span>(25)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/wwj_748/article/details/8899699" title="Android应用开发--MP3音乐播放器界面设计（1）">Android应用开发--MP3音乐播放器界面设计（1）</a><span>(19)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"><iframe id="ad_frm_2" frameborder="0" scrolling="no" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ad.htm" style="border-width: 0px; overflow: hidden; width: 266px; height: 200px;"></iframe></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/41479749#comments">Android开发记录17-sdk更新、Eclipse下查看源码、chm文档提供等干货</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/sishenyihuba" class="user_name">sishenyihuba</a>:
+这个确实实用啊，自从google被墙了 ，我就一直蛋疼了，感谢小巫的分享。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/40985785#comments">小巫博客-开源项目整理帖</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/sishenyihuba" class="user_name">sishenyihuba</a>:
+小巫真心厉害啊~~~
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/8975624#comments">Android应用开发--MP3音乐播放器代码实现（二）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u011575946" class="user_name">小Eddy</a>:
+楼主，想请教个问题，为什么要用service来控制音乐播放？是资源，耗时之类的问题？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/8974735#comments">Android应用开发--MP3音乐播放器界面设计（2）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/meex" class="user_name">meex</a>:
+棒！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/19042325#comments">Android 友盟社会化组件-分享实现</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qq_23920591" class="user_name">qq_23920591</a>:
+为什么在点击弹出的分享选项会显示网络未连接啊？就算联网也一样
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/19042325#comments">Android开发记录17-sdk更新、Eclipse下查看源码、chm文档提供等干货</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/whqsj" class="user_name">whqsj</a>:
+挺好的,关注你的博客,我是安卓菜鸟,还得向你学习呀
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/8619417#comments">基于Android的小巫新闻客户端开发---显示新闻详细内容业务逻辑实现</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/kaola_us" class="user_name">kaola_us</a>:
+具体怎么实现数据缓存的呢?
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/9256251#comments">Android应用--简、美音乐播放器原型放送（作者：小巫）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/acquiresecret" class="user_name">acquiresecret</a>:
+碉堡了，感觉我工作三年都没有你厉害够可以，你现在是专职搞安卓？可以交个朋友吗我q624759860
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/39959637#comments">Android应用开发-小巫CSDN博客客户端总结篇</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/poplanchong123" class="user_name">poplanchong123</a>:
+楼主，问你个问题，像读你开发的代码，Resources，Fragments，ActionBar，Me...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/wwj_748/article/details/29068171#comments">大学毕业初感悟</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u012838779" class="user_name">老喻</a>:
+@wwj_748:没啥没啥  我现在也是在做android客户端，cocos2dx不过是自己感兴趣啦
+    </p>
+    </li>
+</ul>
+</div>
+
+
+<div id="custom_column_11897405" class="panel">
+<ul class="panel_head"><span>【程序员的成长路线图】</span></ul>
+<ul class="panel_body">
+
+<span style="color:rgb(102,51,255)">从入门到成长到成熟再到优秀，大多数程序员走了前面一段相似的道路，而有些人却走得更远一些！！！！
+</span>
+
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/JavaScript1.js"></script><link rel="stylesheet" type="text/css" href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="http://wpa.qq.com/msgrd?v=3&uin=2355263776&site=qq&menu=yes" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&uin=2251809102&site=qq&menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-600-2320</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏乐知网络技术有限公司 提供商务支持</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display: none; position: absolute; z-index: 9990; width: 170px;">  <iframe src="about:blank" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/notify.js"></script>
+
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/msg.popup.js"></script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ad-blog.js"></script>
+<script type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/count.js"></script><iframe src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/logs.htm" frameborder="0" width="0" height="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+   
+    <link href="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ask_float_block.css" type="text/css" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/wmd.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/showdown.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/prettify.js"></script>
+    <script language="JavaScript" type="text/javascript" src="./哈夫曼树算法（数据结构C++描述） - 巫_1曲待续 - 博客频道 - CSDN.NET_files/ask_float_block.js"></script>
+
+
+
+<div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><div data-mod="popu_64" class="tracking-ad" chg-blk="0"><a id="com-ask-float-block" title="提问按钮" style="top:408px"></a><a id="com-quick-reply" title="快速回复" style="top:449px"></a><a id="com-d-top-a" style="top: 490px; display: none;" title="返回顶部" onclick=""></a> </div><div class="pop_edit ask_first comm_ask_first" style="display: none;"><h3>提问</h3><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" nodetype="close" class="close">×</a> <div class="context"> <form id="form" nodetype="form-popup" class="form"><div class="askFirst_desc"><span class="afd_p">CSDN 问答是一个真诚、认真、有活力的技术社区。</span><br><span class="afd_p">我们很愿意帮助您，希望您提出的每一个问题都能得到解答，同时也希望您知道，一个好的问题</span><br><span class="afd_p">更容易得到好的答案<span>&nbsp;&nbsp;</span><a href="http://ask.csdn.net/help?#rule12" target="_blank">怎样提出一个好的问题？</a></span><br><span class="afd_p">提问时应遵循认真、简洁、明确、规范的原则</span><br><span class="afd_p">• 首先确定您是否需要使用悬赏提问；</span><br><span class="afd_p">• 问题中没必要出现“大神帮帮忙”、“教授救救我”之类与技术问题无关的信息，及时采纳最佳答案就是对回答人的最好认可；</span><br><span class="afd_p">• 问题标题要有明确而有价值的信息，“有人遇到过这种情况吗？帮忙进来看看”这种标题只会降低您的问题被回答的概率；</span><br><span class="afd_p">• “求代码”类的问题请您悬赏提问，我们乐于将其看成一种交易。</span><br><br><span class="afd_p">问答频道并不欢迎这种问题</span><br><span class="afd_p">• 和已有问题完全重复的问题，为避免重复，提问前请先进行搜索；</span><br><span class="afd_p">• 招聘 / 求职、交易 / 合作、寻人 / 征友；</span><br><span class="afd_p">• 无明确答案的调查类问题。如苹果和谷歌，大家更欣赏谁？</span><br><span class="afd_p">想学会更好的提问，请查看<span>&nbsp;</span><a href="http://ask.csdn.net/help" target="_blank">问答频道提问规范</a></span></div><div class="askFirst_se"><span>提问前请搜索</span></div><div class="search_div"><input id="askInput" type="text" placeholder="输入问题，查看是否存在相似的问题"></div></form> </div> <div class="success"></div></div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="输入问题，查看是否存在相似的问题"></div><div class="second_se">问题描述：</div> <div id="wmd-button-bar"><ul class="wmd-button-row"><li class="wmd-button wmd-bold-button" title="Strong &lt;strong&gt; Ctrl+B" style="background-position: 0px 0px;"></li><li class="wmd-button wmd-italic-button" title="Emphasis &lt;em&gt; Ctrl+I" style="background-position: -20px 0px;"></li><li class="wmd-spacer wmd-spacer1"></li><li class="wmd-button wmd-link-button" title="Hyperlink &lt;a&gt; Ctrl+L" style="background-position: -40px 0px;"></li><li class="wmd-button wmd-quote-button" title="Blockquote &lt;blockquote&gt; Ctrl+Q" style="background-position: -60px 0px;"></li><li class="wmd-button wmd-code-button" title="Code Sample &lt;pre&gt;&lt;code&gt; Ctrl+K" style="background-position: -80px 0px;"></li><li class="wmd-button wmd-image-button" title="Image &lt;img&gt; Ctrl+G" style="background-position: -100px 0px;"></li><li class="wmd-spacer wmd-spacer2"></li><li class="wmd-button wmd-olist-button" title="Numbered List &lt;ol&gt; Ctrl+O" style="background-position: -120px 0px;"></li><li class="wmd-button wmd-ulist-button" title="Bulleted List &lt;ul&gt; Ctrl+U" style="background-position: -140px 0px;"></li><li class="wmd-button wmd-heading-button" title="Heading &lt;h1&gt;/&lt;h2&gt; Ctrl+H" style="background-position: -160px 0px;"></li><li class="wmd-button wmd-hr-button" title="Horizontal Rule &lt;hr&gt; Ctrl+R" style="background-position: -180px 0px;"></li><li class="wmd-spacer wmd-spacer3"></li><li class="wmd-button wmd-undo-button" title="Undo - Ctrl+Z" style="background-position: -200px -20px;"></li><li class="wmd-button wmd-redo-button" title="Redo - Ctrl+Y" style="background-position: -220px -20px;"></li><li class="wmd-button wmd-help-button" style="background-position: -240px 0px;"><a href="http://ask.csdn.net/pages/markdown" target="_blank" title="WMD website"></a></li><li class="wmd-button wmd-at-button" title="Shift+@" style="background-position: -260px 0px;"></li></ul></div> <div id="previw-button"></div> <textarea id="wmd-input" rows="8"></textarea><div class="grippie" style="margin-right: 0px;"></div> <div id="wmd-preview" class="wmd-preview"></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/wwj_748/article/details/7015630#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div></body></html>

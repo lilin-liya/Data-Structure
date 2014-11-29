@@ -1,0 +1,10 @@
+#include "City.h"
+
+int main(int argc, char** argv)
+{
+	City* mycity;
+	mycity = new City(3, 3);
+	mycity->Construct(0,0);
+	mycity->get_cons_plan();
+	return 0;
+}
