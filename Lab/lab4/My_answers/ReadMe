@@ -1,0 +1,12 @@
+In this Lab,I save the infomation of HuffmanTree and the file as following:
+
+At the compress part:
+1.the length of the result_str; (write as int)
+2.the unique char nums in the inputfile;(write as int)
+3.the unique chars in the inputfile;(write as unsigned char)
+4.the frequency of each unique char in the inputfile;(write as int)
+5.the result_str;(write as unsigned char)
+6.the num of 0 I add at the end of the result str,aka,lackbits;(write as unsigned char)
+
+At the decompress part:
+read the special variable in the order above,then I can recreate the HuffmanTree

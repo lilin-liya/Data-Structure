@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/analytics.js"></script>
+<meta charset="utf-8">
+<title>哈夫曼压缩算法 - 捣乱小子 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/bundle-Minyx2_Lite.css">
+<link type="text/css" rel="stylesheet" href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/97778.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/daoluanxiaozi/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/daoluanxiaozi/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/daoluanxiaozi/wlwmanifest.xml">
+<script async="" type="text/javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/gpt.js"></script><script type="text/javascript" async="" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/ga.js"></script><script src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'daoluanxiaozi', cb_enable_mathjax=false;</script>
+<script src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/bundle-Minyx2_Lite.js" language="javascript" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/pubads_impl_54.js"></script><style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style><script type="text/javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<link rel="author" href="https://plus.google.com/115102431774399294975">
+<link rel="publisher" href="https://plus.google.com/115102431774399294975">
+
+<style type="text/css">
+div.post div.entry blockquote {
+        background-color: #f5f2f0;
+        background-image:none;
+        padding: 0 0 0 0px;
+	padding: 1em;
+	margin: 2em 2em;
+	font-family: Consolas, Monaco, 'Andale Mono', monospace;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	border-width: 1em;
+	border-color: #e0dfcc;
+	border-style: solid;
+	text-shadow: 0 1px white;
+    }
+
+     h3 {
+        margin: 10px 0;
+        font-family: 'Microsoft Yahei';
+        text-align: left;
+        padding: 6px 20px;
+        color: #fff;
+        background: #55895B;
+        #border-radius: 4px;
+        clear: both;
+    }
+
+    .Abstract
+    {
+        padding: 15px;
+        border: dotted 2px #999;
+        color: #999;
+        font-family: 'Microsoft Yahei';
+        border-radius: 4px;
+    }
+        
+    .third_title
+    {
+        margin: 10px 0;
+        font-family: 'Microsoft Yahei';
+        text-align: left;
+        padding: 6px 20px;
+        color: #fff;
+        background: #55895B;
+        font-size: 20px;
+        #border-radius: 4px;
+        clear: both;
+    }
+        
+        
+    .Second
+    {
+        margin: 10px 0;
+        font-family: 'Microsoft Yahei';
+        padding: 6px 20px;
+        background: #93C8A2;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 4px;
+        clear: both;
+    }
+        
+        
+    .Third
+    {
+        margin: 10px 0;
+        padding: 6px 20px;
+        font-family: 'Microsoft Yahei';
+        margin: 15px 0;
+        font-size: 16px;
+        color: fff;
+        background: #C6EFD2;
+        color: #999;
+        border-radius: 4px;
+        clear: both;
+    }
+    .note
+    {
+        margin: 10px 0;
+        padding: 15px 20px 15px 60px;
+        background: #FCFAA9 url('http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/372646/r_o_yellow-pin.png') no-repeat 20px 0;
+        font-size: 15px;
+        font-family: 'Microsoft Yahei';
+        box-shadow: 0 0 8px #aaa;
+        clear: both;
+    }
+    .blockquote
+    {
+        background:none;
+        border:2px solid #EFEFEF;
+        color:#FFFFFF;
+        margin-left:25px;
+        padding-left:10px;
+        padding-right:10px;
+        padding-top:5px;
+        padding-bottom:5px;
+        margin-top:10px;
+        margin-bottom:10px;
+     }
+        
+    .demo
+    {
+        text-align: left;
+        padding: 6px 20px;
+        overflow: auto;
+        border-radius: 4px;
+        background: orange;
+        color: #fff;
+        font-size: 16px;
+        clear: both;
+    }
+</style>
+<link type="text/css" rel="stylesheet" href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shThemeDefault.css">  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shCore.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shLegacy.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushXml.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushVb.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushSql.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushScala.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushSass.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushRuby.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushPython.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushPowerShell.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushPlain.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushPhp.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushPerl.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushJavaFX.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushJava.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushGroovy.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushErlang.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushDiff.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushDelphi.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushCss.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushCSharp.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushCpp.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushColdFusion.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/daoluanxiaozishBrushBash.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushAS3.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shBrushAppleScript.js"></script>  
+<script language="javascript" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/shAutoloader.js"></script>  
+
+
+<script language="javascript">  
+window.onload = function() {  
+     dp.SyntaxHighlighter.HighlightAll('code');  
+};  
+ </script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-35170852-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!--PageBeginHtml Block End-->
+
+
+<div id="container">
+    <a class="minyx" href="http://www.cnblogs.com/">代码改变世界</a>
+    <ul id="topMnu">
+        <!-- 统计数据 -->
+        <li>
+            
+                
+Posts - 99, 
+Articles - 0, 
+Comments - 295
+<!---->
+            
+        </li>
+        <!-- 这边可以增加一些链接 -->
+        <!-- 博客园 -->
+        <li><a href="http://www.cnblogs.com/">Cnblogs</a></li>
+        <!-- 管理 -->
+        <li id="topMnu-dashboard">
+            <a id="lnkDashboard" href="http://www.cnblogs.com/daoluanxiaozi/admin/EditPosts.aspx">Dashboard</a></li>
+        <li>
+            <a id="lnkLogin" href="http://passport.cnblogs.com/login.aspx?ReturnUrl=http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html">Login</a></li>
+    </ul>
+
+    <script type="text/javascript">
+        var m = window.__blog.topMenuRendered;
+        if (m) { m(__$("topMnu")); }
+    </script>
+
+    <div id="header">
+        <ul id="menu">
+            <!-- 首页，当前section加上current类 -->
+            <li id="menu-home" class="current">
+                <a id="lnkHome" href="http://www.cnblogs.com/daoluanxiaozi/">Home</a></li>
+            <!-- 联系 -->
+            <li id="menu-contact">
+                <a id="lnkContact" href="http://space.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90">Contact</a></li>
+            <!-- 相册 -->
+            <li id="menu-gallary">
+                <a id="lnkGallery" href="http://www.cnblogs.com/daoluanxiaozi/gallery.html">Gallery</a></li>
+            <!-- Rss订阅 -->
+            <li id="rss">
+                <a id="lnkRss" href="http://www.cnblogs.com/daoluanxiaozi/rss">RSS</a></li>
+        </ul>
+        <div id="newmsg"></div>
+        <h1>
+            <!-- 主标题 -->
+            <a id="lnkBlogTitle" href="http://www.cnblogs.com/daoluanxiaozi/">捣乱小子</a>
+            <!-- 子标题 -->
+            <small>
+                男，程序员，关注 c++，欢迎技术探讨，平时看书，写博客。</small>
+        </h1>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.headerRendered;
+        if (m) { m(__$("header")); }
+    </script>
+
+    <div id="wrapper">
+        <div id="content">
+            <script type="text/javascript">
+                var m = window.__blog.preRenderPosts;
+                if (m) { m(); }
+            </script>
+            
+
+<div class="post" id="post">
+    <a name="top"></a>
+    <h2><a id="cb_post_title_url" href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/哈夫曼压缩算法 - 捣乱小子 - 博客园.htm">哈夫曼压缩算法</a></h2>
+    <small>2011-12-26 19:41 by 捣乱小子, <span id="post_view_count">4937</span> 阅读, <span id="post_comment_count">17</span> 评论, <a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#" onclick="AddToWz({0});return false;">收藏</a>,  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2302464" rel="nofollow">编辑</a></small>
+    <div class="entry">
+        <div id="cnblogs_post_body"><p><font size="4"></font></p>
+<h3 class="third_title">编程独白</h3>
+<p><font size="4"><span style="font-size: 14pt"><span class="Apple-tab-span" style="white-space:pre">	</span>给你40分钟的时间，你可以思考十分钟，然后用三十分钟的时间来写代码，最后浪费在无谓的调试上；你也可以思考半个小时，彻底弄清问题的本质与程序的脉络，然后用十分钟的时间来编写代码，体会代码如行云流水而出的感觉。在编程过程当中，相信大家都深有体会，在调试上浪费时间，问题出现在下笔之前没有一个系统结构。</span></font></p>
+<p>&nbsp;</p>
+<p><font size="4"></font></p>
+<h3 class="third_title">关于哈夫曼</h3><span style="font-size: 14pt"><span class="Apple-tab-span" style="white-space:pre">	</span>哈夫曼在通信领域有很多的用途，将需要传输的数据转换01串，相比直接传输，极大提高了传输的速率，同时还在数据压缩的重要方法。而本篇主要介绍的是哈夫曼压缩算法。</span> 
+<p>&nbsp;</p>
+<p><font size="4"></font></p>
+<h3 class="third_title">哈夫曼树创建</h3><span style="font-size: 14pt; font-weight: normal" class="Apple-style-span">哈夫曼树创建用了两种的方法，一种是基于顺序表，另一种是基于最小堆。关于这两种方法可以参考：</span> 
+<ul><li>
+<h4><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/11/12/2246295.html">基于顺序表哈夫曼树</a></h4></li><li>
+<h4><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/15/2288362.html">（堆的应用）Huffman赫夫曼树的建立</a>（推荐）</h4></li></ul>
+<p><font size="4">建立Huffman树的基本思路：</font></p>
+<blockquote>
+<p><font size="4">给定有权重的一系列数据（带权重），从中挑选最小权重的两个数据，组成一棵树，得到的父节点再插入到数据系列当中。</font></p>
+<p><font size="4"></font></p></blockquote>
+<p><font size="4"></font></p>
+<h3>&nbsp;</h3>
+<h3 class="third_title">哈夫曼压缩思路</h3>
+<p><font size="4">假设一字符串是，“abcabcabcabcabcabcddddddddd”，统计各字符出现的次数如<span style="font-size: 12pt">下表。</span></font></p>
+<table border="2" cellspacing="0" cellpadding="2" width="249">
+<tbody>
+<tr>
+<td valign="top" width="127"><font size="4">字符</font></td>
+<td valign="top" width="118"><font size="4">出现次数</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">a</font></td>
+<td valign="top" width="118"><font size="4">6</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">b</font></td>
+<td valign="top" width="118"><font size="4">6</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">c</font></td>
+<td valign="top" width="118"><font size="4">6</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">d</font></td>
+<td valign="top" width="118"><font size="4">9</font></td></tr></tbody></table>
+<p><font size="4"></font></p>
+<p><font size="4"></font></p>
+<p><font size="4"><span class="Apple-tab-span" style="white-space:pre">	</span>按照一搬的存储方法，一个字符占用一个字节，那么共花费(6+6+6+9)*sizeof(char) = 27字节，27字节确实不算什么，但是如果是海量数据的时候，就可能要考虑存储空间的问题了。</font></p>
+<p><font size="4">来看看哈夫曼压缩算法是怎么做的，同样是上面的例子，我们试着建立哈夫曼树，出现的次数就当做是权重，出现的次数越多的话，越靠近根节点，那么编码越短，如下图：</font></p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940373282.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940381221.png" width="461" height="341"></a> </p>
+<p>&nbsp;</p>
+<p><font size="4">于是上面的“abcabcabcabcabcabcddddddddd”，就可以转化为“0001,1000,0110,0001,1000,0110,0001,1000,0110,1111,1111,1111,1111,11”，注意这里采用的按位存储的，也就是说0和1都是位，而非char型。那么之前的27字节就被我们转换成了7个字节（7字节不足，不足的话就补零），而这就达到了压缩的效果。</font></p>
+<p><font size="4">所以总结一下：利用哈夫曼树编码的特点，权重越大越靠近根节点，得到的编码就越短的原理，而如果把字符出现次数作为权重的话，文本当中出现次数最多的字符就被压缩成了很短的编码。</font></p>
+<p>&nbsp;</p>
+<h3 class="third_title">哈夫曼压缩详解</h3>
+<p><font size="4"></font></p>
+<p><font size="4"></font></p>
+<p><font size="4">·压缩过程主要步骤如下：</font></p>
+<ol><li><font size="4">统计：读入源文件，统计字符出现的次数（即统计权重），顺便根据权重进行从大到小的排序（主要的话之后的操作会简单一些）；</font></li><li><font size="4">建树：以字符的权重（权重为0的字符除外）为依据建立哈夫曼树；</font></li><li><font size="4">编码：依据2中的哈夫曼树，得到每一个字符的编码；</font></li><li><font size="4">写入：新建压缩文件，写入压缩数据。</font> </li></ol>
+<p><font size="4"></font></p>
+<p><font size="4">其中最为复杂的是步骤4，因为它涉及到了位的操作，待我细细道来。</font></p>
+<p>&nbsp;</p>
+<p><font size="4">假设一字符串是，“acbcbacddaddaddccd”，统计各字符出现的次数如下表。</font></p>
+<table border="2" cellspacing="0" cellpadding="2" width="249">
+<tbody>
+<tr>
+<td valign="top" width="127"><font size="4">字符</font></td>
+<td valign="top" width="118"><font size="4">出现次数</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">a</font></td>
+<td valign="top" width="118"><font size="4">4</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">b</font></td>
+<td valign="top" width="118"><font size="4">2</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">c</font></td>
+<td valign="top" width="118"><font size="4">5</font></td></tr>
+<tr>
+<td valign="top" width="127"><font size="4">d</font></td>
+<td valign="top" width="118"><font size="4">7</font></td></tr></tbody></table>
+<p>&nbsp;</p>
+<p align="center"><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940384875.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940397449.png" width="325" height="457"></a> 哈夫曼树&nbsp; </p>
+<p align="center">&nbsp;</p>
+<p><font size="4">步骤123统计，建树，编码都已经完成了，剩下写入压缩文件。将字符串一步一步翻译成01串，</font></p>
+<p>&nbsp;</p>
+<ul><li><span style="line-height: 27px; font-size: large" class="Apple-style-span">a:<font class="Apple-style-span" color="#ff0000">111</font></span></li><li><span style="line-height: 27px; font-size: large" class="Apple-style-span">ac:111</span><font style="line-height: 27px; font-size: large" color="#ff0000">1 0</font></li><li><span style="line-height: 27px; font-size: large" class="Apple-style-span">acb:1111 0</span><font style="line-height: 27px; font-size: large" color="#ff0000">110</font></li><li><span style="line-height: 27px; font-size: large" class="Apple-style-span">acbc:1111 0110 </span><font style="line-height: 27px; font-size: large" color="#ff0000">10</font></li><li><span style="line-height: 27px; font-size: large" class="Apple-style-span">acbcb:1111 0110 10</span><font style="line-height: 27px; font-size: large" color="#ff0000">11 0…</font></li></ul>
+<p>&nbsp;</p>
+<p><font color="#ff0000" size="4"></font></p>
+<p><font color="#ff0000" size="4"></font></p>
+<p><font size="4">似乎都很顺利，但是位操作有点麻烦。首先申请<strong>足够大的内存</strong>，比如已知文本字符个数是1000个字符（字节），可以申请1000*4，即一个字节平均4字节（32位）的压缩编码空间（已经足够大了），别把这些看成是char型了，当作位来看。</font></p>
+<p><font size="4">声明</font><span style="line-height: 23px; font-size: large" class="Apple-style-span">nCodeIndex</span><span style="line-height: 23px; font-size: large" class="Apple-style-span">作为已编码的位数，相当于counter。刚申请的</span><strong style="line-height: 23px; font-size: large">足够大的内存</strong><span style="line-height: 23px; font-size: large" class="Apple-style-span">以8位划分，那么可以发现：</span></p>
+<ul><li><font size="4">nCodeIndex/8可以标明第一个未存满的字节，相当于nCodeIndex&gt;&gt;3；</font></li><li><font size="4"></font>
+<p><font size="4">nCodeIndex%8可以标明第一个未存满的字节当中有几位已经完成了存储，相当于nCodeIndex&amp;7。</font></p></li></ul>
+<p><font size="4"></font></p>
+<p><font size="4"></font></p>
+<p><font size="4">可能说的不够清楚，所以画了图:</font></p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940398911.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940402009.png" width="594" height="147"></a> </p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940414027.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940411584.png" width="596" height="134"></a> </p>
+<p>&nbsp;</p>
+<p><font size="4">*(long *)(pDest+(nCodeIndex&gt;&gt;3)) |= (p-&gt;code) &lt;&lt; (nCodeIndex&amp;7);（其中p为哈夫曼节点）</font></p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940423843.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940438369.png" width="808" height="178"></a> </p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><font size="4">如此一来，我们就可以很理直气壮的将<font size="4">*(long *)(pDest+(nCodeIndex&gt;&gt;3))赋值为<font size="4">*(long *)(pDest+(nCodeIndex&gt;&gt;3)) | (p-&gt;code) &lt;&lt; (nCodeIndex&amp;7)（0|X=X），而不用担心到底<font size="4">*(long *)(pDest+(nCodeIndex&gt;&gt;3))里面到底有多少位已经是存储了的。</font></font></font></font></p>
+<p><font size="4">给出压缩主要代码：</font></p><div><div id="highlighter_674611" class="syntaxhighlighter  cpp"><div class="toolbar"><span><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div><div class="line number30 index29 alt1">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div><div class="line number43 index42 alt2">43</div><div class="line number44 index43 alt1">44</div><div class="line number45 index44 alt2">45</div><div class="line number46 index45 alt1">46</div><div class="line number47 index46 alt2">47</div><div class="line number48 index47 alt1">48</div><div class="line number49 index48 alt2">49</div><div class="line number50 index49 alt1">50</div><div class="line number51 index50 alt2">51</div><div class="line number52 index51 alt1">52</div><div class="line number53 index52 alt2">53</div><div class="line number54 index53 alt1">54</div><div class="line number55 index54 alt2">55</div><div class="line number56 index55 alt1">56</div><div class="line number57 index56 alt2">57</div><div class="line number58 index57 alt1">58</div><div class="line number59 index58 alt2">59</div><div class="line number60 index59 alt1">60</div><div class="line number61 index60 alt2">61</div><div class="line number62 index61 alt1">62</div><div class="line number63 index62 alt2">63</div><div class="line number64 index63 alt1">64</div><div class="line number65 index64 alt2">65</div><div class="line number66 index65 alt1">66</div><div class="line number67 index66 alt2">67</div><div class="line number68 index67 alt1">68</div><div class="line number69 index68 alt2">69</div><div class="line number70 index69 alt1">70</div><div class="line number71 index70 alt2">71</div><div class="line number72 index71 alt1">72</div><div class="line number73 index72 alt2">73</div><div class="line number74 index73 alt1">74</div><div class="line number75 index74 alt2">75</div><div class="line number76 index75 alt1">76</div><div class="line number77 index76 alt2">77</div><div class="line number78 index77 alt1">78</div><div class="line number79 index78 alt2">79</div><div class="line number80 index79 alt1">80</div><div class="line number81 index80 alt2">81</div><div class="line number82 index81 alt1">82</div><div class="line number83 index82 alt2">83</div><div class="line number84 index83 alt1">84</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">void</code> <code class="cpp plain">CompressHuffman(</code><code class="cpp color1 bold">char</code> <code class="cpp plain">* filename)</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·统计权重</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">int</code> <code class="cpp plain">count = Statistics(filename);</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">Huffman hf;</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">hf.CreateHuffmanTree(acsii,count);</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·测试</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//hf.Print();</code></div><div class="line number11 index10 alt2">&nbsp;</div><div class="line number12 index11 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//根据生成的哈夫曼树，为每个字符生成编码</code></div><div class="line number13 index12 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">EnCode(&amp;hf,count);</code></div><div class="line number14 index13 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">HuffmanNode * root = hf.GetRoot();</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fstream fshuff;</code></div><div class="line number17 index16 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.open(</code><code class="cpp string">"data.huff"</code><code class="cpp plain">,ios::binary|ios::out);</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//写入压缩文件的工作流程如下：</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·数据个数（字符出现的个数）</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·每个数据（data）以及其权重（rate）</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·源文件中的字符个数，如源文件为abcd123，那么字符个数为7</code></div><div class="line number24 index23 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·编码的长度</code></div><div class="line number25 index24 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·编码</code></div><div class="line number26 index25 alt1">&nbsp;</div><div class="line number27 index26 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·写入字符个数，比如abdarr，字符个数是4</code></div><div class="line number28 index27 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write((</code><code class="cpp color1 bold">char</code> <code class="cpp plain">*)&amp;count,</code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code><code class="cpp plain">));</code></div><div class="line number29 index28 alt2">&nbsp;</div><div class="line number30 index29 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·写入acsii值和权重，以便在解压缩的时候重建哈夫曼树</code></div><div class="line number31 index30 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code>&nbsp; <code class="cpp plain">i;</code></div><div class="line number32 index31 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code><code class="cpp plain">(i=0; i&lt;count; i++)</code></div><div class="line number33 index32 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number34 index33 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·这里的读写可能会有问题的</code></div><div class="line number35 index34 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write((</code><code class="cpp color1 bold">char</code> <code class="cpp plain">*)&amp;(acsii[i].data),</code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp color1 bold">char</code><code class="cpp plain">));</code></div><div class="line number36 index35 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write((</code><code class="cpp color1 bold">char</code> <code class="cpp plain">*)&amp;(acsii[i].rate),</code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code><code class="cpp plain">)); </code></div><div class="line number37 index36 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number38 index37 alt1">&nbsp;</div><div class="line number39 index38 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·注意区别fs和fshuff，前者是源文件，后者是压缩后的文件</code></div><div class="line number40 index39 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fstream fs(filename,ios::in|ios::binary);</code></div><div class="line number41 index40 alt2">&nbsp;</div><div class="line number42 index41 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·获取源文件文件字节数大小，seekg用在读中，seekp用在写中</code></div><div class="line number43 index42 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fs.seekg(0, ios_base::end);</code></div><div class="line number44 index43 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">long</code> <code class="cpp plain">nFileLen = fs.tellg();</code></div><div class="line number45 index44 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fs.seekg(0,ios::beg);</code></div><div class="line number46 index45 alt1">&nbsp;</div><div class="line number47 index46 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·将源文件逐个写入到压缩文件当中</code></div><div class="line number48 index47 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">char</code> <code class="cpp plain">* pDest = </code><code class="cpp keyword bold">new</code> <code class="cpp color1 bold">char</code> <code class="cpp plain">[nFileLen];</code></div><div class="line number49 index48 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code><code class="cpp plain">(i=0; i&lt;nFileLen; i++)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">//·清零，不清零会出现致命性的错误</code></div><div class="line number50 index49 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">*(pDest+i) = 0;</code></div><div class="line number51 index50 alt2">&nbsp;</div><div class="line number52 index51 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code> <code class="cpp plain">nCodeIndex = 0;</code></div><div class="line number53 index52 alt2">&nbsp;</div><div class="line number54 index53 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">char</code> <code class="cpp plain">* temp = </code><code class="cpp keyword bold">new</code> <code class="cpp color1 bold">char</code><code class="cpp plain">[nFileLen+1];</code></div><div class="line number55 index54 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fs.read(temp,nFileLen);</code></div><div class="line number56 index55 alt1">&nbsp;</div><div class="line number57 index56 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">HuffmanNode *&nbsp; p;</code></div><div class="line number58 index57 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code><code class="cpp plain">(i=0; i&lt;nFileLen; i++)</code></div><div class="line number59 index58 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number60 index59 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·在acsii表当中</code></div><div class="line number61 index60 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">p = GetCodeFromACSIITable(temp[i],count);</code></div><div class="line number62 index61 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp functions bold">assert</code><code class="cpp plain">(p != NULL);</code></div><div class="line number63 index62 alt2">&nbsp;</div><div class="line number64 index63 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">*(</code><code class="cpp color1 bold">long</code> <code class="cpp plain">*)(pDest+(nCodeIndex&gt;&gt;3)) |= </code></div><div class="line number65 index64 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">(p-&gt;lCode) &lt;&lt; (nCodeIndex&amp;7);</code></div><div class="line number66 index65 alt1">&nbsp;</div><div class="line number67 index66 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">nCodeIndex += p-&gt;nCodeLen;</code></div><div class="line number68 index67 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number69 index68 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·写入源文件的字符个数</code></div><div class="line number70 index69 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write((</code><code class="cpp color1 bold">char</code> <code class="cpp plain">*)&amp;nFileLen,</code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp color1 bold">long</code><code class="cpp plain">));</code></div><div class="line number71 index70 alt2">&nbsp;</div><div class="line number72 index71 alt1">&nbsp;</div><div class="line number73 index72 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·写入编码长度</code></div><div class="line number74 index73 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write((</code><code class="cpp color1 bold">char</code> <code class="cpp plain">*)&amp;nCodeIndex,</code><code class="cpp keyword bold">sizeof</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code><code class="cpp plain">));</code></div><div class="line number75 index74 alt2">&nbsp;</div><div class="line number76 index75 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">unsigned </code><code class="cpp color1 bold">int</code>&nbsp; <code class="cpp plain">nDestLen = nCodeIndex/8;</code></div><div class="line number77 index76 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(nDestLen*8 &lt; nCodeIndex)</code></div><div class="line number78 index77 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">nDestLen ++;</code></div><div class="line number79 index78 alt2">&nbsp;</div><div class="line number80 index79 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//·写入编码</code></div><div class="line number81 index80 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.write(pDest,nDestLen);</code></div><div class="line number82 index81 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fshuff.close();</code></div><div class="line number83 index82 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">fs.close();</code></div><div class="line number84 index83 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>&nbsp;</p>
+<p><font size="4"></font></p>
+<h3 class="third_title">简介哈夫曼压缩文件DL结构</h3>
+<p><font size="4"><span class="Apple-tab-span" style="white-space:pre">	</span>前一段时间在接触位图的时候被位图结构触动了，感觉它存储得有条理，于是萌生了为哈夫曼压缩文件定义一个存储结构，称之为<font face="华文行楷">哈夫曼压缩文件DL结构</font>。<strong>关键是要统一，这篇博文用的是一种结构，另一篇用的又是另一种，纷杂的样式会让初学者发晕，所以统一结构对于学习哈夫曼压缩文件会有很大的帮助。</strong></font></p>
+<p><font size="4">DL结构组成部分：</font></p>
+<ul><li><font size="4">节点个数-用以规定创建哈夫曼树节点个数，以便读入节点域；</font></li><li><font size="4">节点域-用以创建哈夫曼树和产生字符编码；</font></li><li><font size="4">源文件字符数-在解压的时候有用；</font></li><li><font size="4">编码长度（以位为单位）-源文件编码的总长度，以位为单位；</font></li><li><font size="4">编码域-存储所有字符编码的存储域。</font> </li></ul>
+<p><font size="4">为了便于让你不看文字就能明白，看下图，按着这种结构就相当于有了大概的思路。</font></p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/daoluanxiaozi/201112/201112261940439864.png"><img style="border-right-width: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto" title="image" border="0" alt="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/201112261940484470.png" width="272" height="821"></a> </p>
+<p><font size="4"></font></p>
+<p><font size="4"></font></p>
+<p><font size="4">&nbsp;</font></p>
+<h3 class="third_title">哈夫曼解压详解</h3>
+<p><font size="4"><span class="Apple-tab-span" style="white-space:pre">	</span>解压的过程就简单很多了，因为一些代码已经在解压过程当中完成，比如哈夫曼树的建立，我们只要设计压缩和解压通用的接口，就可以很简单的按照编码域的内容，将编码翻译成原文。</font></p>
+<ol><li><font size="4">读入节点个数；</font></li><li><font size="4">根据1，读入节点域；</font></li><li><font size="4">创建哈夫曼树；</font></li><li><font size="4">读入编码长度；</font></li><li><font size="4">根据4，读入编码域；</font></li><li><font size="4">翻译；</font></li><li><font size="4">写入解压后的文件。</font> </li></ol>
+<p><font size="4"></font></p>
+<p><font size="4">根据编码长度（以bit为单位），可以计算出编码域的大小（以byte为单位），读入编码域就很方便了。其中翻译部分我给出一部分代码，根据哈夫曼树，将编码域的01串按位处理，转换为字符。</font></p>
+<ul><li><font size="4">Code&amp;1判断最低位是0还是1，从而决定指向left还是right；</font></li><li><font size="4">Code&gt;&gt;=1，将Code右移，方便处理下一位；</font></li><li><font size="4">每当翻译出一个字符，就要将当前的哈夫曼指针重新指向root，p = hf.GetRoot()。</font> </li></ul><div><div id="highlighter_266380" class="syntaxhighlighter  cpp"><div class="toolbar"><span><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1">28</div><div class="line number29 index28 alt2">29</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp keyword bold">for</code><code class="cpp plain">(i=0; i&lt;nFileLen-1;)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">//·特地少处理一个字节</code></div><div class="line number2 index1 alt1"><code class="cpp plain">{</code></div><div class="line number3 index2 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">Code = *(temp+(nSrcIndex));</code></div><div class="line number4 index3 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">for</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code> <code class="cpp plain">j=7; j&gt;=0; j--)</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">p = (Code&amp;1) ? p-&gt;right : p-&gt;left;</code></div><div class="line number7 index6 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(!p-&gt;left &amp;&amp; !p-&gt;right)</code></div><div class="line number8 index7 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number9 index8 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">*(pDest+i) = p-&gt;data;</code></div><div class="line number10 index9 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">p = hf.GetRoot();</code></div><div class="line number11 index10 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">i++;</code></div><div class="line number12 index11 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number13 index12 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">Code&gt;&gt;=1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">//·为了处理下一位，右移一位</code></div><div class="line number14 index13 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">nSrcIndex ++;</code></div><div class="line number16 index15 alt1"><code class="cpp plain">}</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="cpp plain">Code = *(temp+(nSrcIndex));</code></div><div class="line number19 index18 alt2"><code class="cpp keyword bold">for</code><code class="cpp plain">(</code><code class="cpp color1 bold">int</code> <code class="cpp plain">j=0; j&lt;nOffset; j++)</code></div><div class="line number20 index19 alt1"><code class="cpp plain">{</code></div><div class="line number21 index20 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">p = (Code&amp;1) ? p-&gt;right : p-&gt;left;</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">if</code><code class="cpp plain">(!p-&gt;left &amp;&amp; !p-&gt;right)</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number24 index23 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">*(pDest+i) = p-&gt;data;</code></div><div class="line number25 index24 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">cout &lt;&lt; p-&gt;data &lt;&lt; endl;</code></div><div class="line number26 index25 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">p = hf.GetRoot();</code></div><div class="line number27 index26 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number28 index27 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">Code&gt;&gt;=1;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code><code class="cpp comments">//·为了处理下一位，右移一位</code></div><div class="line number29 index28 alt2"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p><span style="font-size: 14pt">附哈夫曼压缩算法工程：</span><a title="哈夫曼压缩算法.rar" href="http://files.cnblogs.com/daoluanxiaozi/%E5%93%88%E5%A4%AB%E6%9B%BC%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95.rar"><span style="font-size: 14pt">哈夫曼压缩算法.rar</span></a></p>
+<p><font size="4">本文完。Monday, December 26, 2011</font></p></div><div id="MySignature" style="display: block;">更多请访问：http://daoluan.net</div>
+        <div class="clear"></div>
+        <div id="blog_post_info_block">
+        <div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2302464,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/daoluanxiaozi/" target="_blank"><img src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/u334495.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/daoluanxiaozi/">捣乱小子</a><br>
+<a href="http://home.cnblogs.com/u/daoluanxiaozi/followees">关注 - 16</a><br>
+<a href="http://home.cnblogs.com/u/daoluanxiaozi/followers">粉丝 - 172</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(2302464,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">7</span>
+    </div>
+	<div class="buryit" onclick="votePost(2302464,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+        <div class="clear"></div>
+        <div id="post_next_prev"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/20/2295114.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/20/2295114.html" title="发布于2011-12-20 20:22">我的第一个MFC小项目（4）之 位图转换（续）</a><br><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/01/28/2330527.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/01/28/2330527.html" title="发布于2012-01-28 15:12">MFC 自定义消息</a><br></div>
+    </div>
+</div>
+    <ul class="postmetadata">
+        <li class="icon_cat" id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/daoluanxiaozi/category/324922.html">数据结构</a></li>
+        <li class="icon_bullet" id="EntryTag">标签: <a href="http://www.cnblogs.com/daoluanxiaozi/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>, <a href="http://www.cnblogs.com/daoluanxiaozi/tag/%E5%93%88%E5%A4%AB%E6%9B%BC%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/">哈夫曼压缩算法</a></li>
+    </ul>
+</div>
+<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=97778,cb_entryId=2302464,cb_blogApp=currentBlogApp,cb_blogUserGuid='a8c0022f-5ee4-e011-8ee0-842b2b196315',cb_entryCreatedDate='2011/12/26 19:41:00';loadViewCount(cb_entryId);</script>
+<script type="text/javascript">
+    var m = window.__blog.postRendered;
+    if (m) { m(__$("post")); }
+</script>
+<script type="text/javascript">
+    var m = window.__blog.postRenderPosts;
+    if (m) { m(); }
+</script>
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<a class="addcomment" href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#comment_tip">Add your comment</a>
+<h3 id="comments"></h3>
+<div class="feedbackNoItems"></div>
+
+
+<ol class="commentlist" id="commentList">	
+
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2279999" class="layer">#1楼</a><a name="2279999" id="comment_anchor_2279999"></a></cite> <a id="a_comment_author_2279999" href="http://www.cnblogs.com/idche/" target="_blank">Jun.lu</a> <a href="http://msg.cnblogs.com/msg/send/Jun.lu" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-26 21:21</span></small>
+			</h5>
+			<div id="comment_body_2279999" class="blog_comment_body">很详细很易懂！<br>至少让我看明白原理了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2279999,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2279999,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2279999_avatar" style="display:none;">http://pic.cnitblog.com/face/u85181.jpg</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280076" class="layer">#2楼</a><a name="2280076" id="comment_anchor_2280076"></a></cite> <a id="a_comment_author_2280076" href="http://home.cnblogs.com/u/347806/" target="_blank">yzjxue</a> <a href="http://msg.cnblogs.com/msg/send/yzjxue" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-26 23:09</span></small>
+			</h5>
+			<div id="comment_body_2280076" class="blog_comment_body">说的很详细。支持了。1</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280076,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280076,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280163" class="layer">#3楼</a><a name="2280163" id="comment_anchor_2280163"></a></cite> <a id="a_comment_author_2280163" href="http://www.cnblogs.com/xuzhiqiang/" target="_blank">56180825</a> <a href="http://msg.cnblogs.com/msg/send/56180825" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 09:08</span></small>
+			</h5>
+			<div id="comment_body_2280163" class="blog_comment_body">规律比较难找吧!如果出现了1W次其不是悲催了需要14位还不如用一个字节</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280163,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280163,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280167" class="layer">#4楼</a><a name="2280167" id="comment_anchor_2280167"></a></cite> <a id="a_comment_author_2280167" href="http://www.cnblogs.com/gooking/" target="_blank">GK的知识博客</a> <a href="http://msg.cnblogs.com/msg/send/GK%e7%9a%84%e7%9f%a5%e8%af%86%e5%8d%9a%e5%ae%a2" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 09:11</span></small>
+			</h5>
+			<div id="comment_body_2280167" class="blog_comment_body">数据压缩就是对数据出现概率的估计，估计的越准压缩率就越大</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280167,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280167,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280167_avatar" style="display:none;">http://pic.cnitblog.com/face/u349884.jpg?id=14101357</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280268" class="layer">#5楼</a><a name="2280268" id="comment_anchor_2280268"></a></cite> <a id="a_comment_author_2280268" href="http://www.cnblogs.com/stone_w/" target="_blank">西安_王磊</a> <a href="http://msg.cnblogs.com/msg/send/%e8%a5%bf%e5%ae%89_%e7%8e%8b%e7%a3%8a" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 10:09</span></small>
+			</h5>
+			<div id="comment_body_2280268" class="blog_comment_body">很详细 +1.</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280268,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280268,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280268_avatar" style="display:none;">http://pic.cnitblog.com/face/172074/20140205210852.png</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280365" class="layer">#6楼</a><a name="2280365" id="comment_anchor_2280365"></a></cite> <a id="a_comment_author_2280365" href="http://www.cnblogs.com/yayagamer/" target="_blank">百分百好牛</a> <a href="http://msg.cnblogs.com/msg/send/%e7%99%be%e5%88%86%e7%99%be%e5%a5%bd%e7%89%9b" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 11:17</span></small>
+			</h5>
+			<div id="comment_body_2280365" class="blog_comment_body">楼主，能够解释一下为什么第一张图（第二张图），讲huffman树的的节点值时：<br>1. 6(a)是00,6(b)是01, ...... <br>2. 7(d)是0, 5(c)c是10, ...... <br>这些值是根据什么来设定的？如何设定？<br><br>另，从图上看，a 是111，可是下面的解释中，a变成了000，到底应该是哪个？谢谢<br>a:000</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280365,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280365,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280367" class="layer">#7楼</a><a name="2280367" id="comment_anchor_2280367"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_2280367" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 11:17</span></small>
+			</h5>
+			<div id="comment_body_2280367" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280167" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2280167);">@</a>GUCAS_Gooking<br>额，如果巧用概率统计的话，压缩的效率会更高的。我附加的工程里面有一个20多M的英语文档，在压缩之后也压缩了10来M。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280367,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280367,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280367_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280383" class="layer">#8楼</a><a name="2280383" id="comment_anchor_2280383"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_2280383" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 11:24</span></small>
+			</h5>
+			<div id="comment_body_2280383" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280365" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2280365);">@</a>百分百好牛<br>①5,6,7是权重，至于01串的话，是哈夫曼编码的内容。<br>如果child == parent-&gt;left，那么编码是0<br>如果child == parent-&gt;right,那么编码是1；<br>如此一来，就形成了01串了。<br>②确实是下面解释有点问题，已经更正了。a:111，非常感谢:)</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280383,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280383,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280383_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280386" class="layer">#9楼</a><a name="2280386" id="comment_anchor_2280386"></a></cite> <a id="a_comment_author_2280386" href="http://www.cnblogs.com/yayagamer/" target="_blank">百分百好牛</a> <a href="http://msg.cnblogs.com/msg/send/%e7%99%be%e5%88%86%e7%99%be%e5%a5%bd%e7%89%9b" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 11:27</span></small>
+			</h5>
+			<div id="comment_body_2280386" class="blog_comment_body"><fieldset class="comment_quote"><legend><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280383" title="查看引用原文">引用</a></legend>捣乱小子：<br>@百分百好牛<br>①5,6,7是权重，至于01串的话，是哈夫曼编码的内容。<br>如果child == parent-&gt;left，那么编码是0<br>如果child == parent-&gt;right,那么编码是1；<br>如此一来，就形成了01串了。<br>②确实是下面解释有点问题，已经更正了。a:111，非常感谢:)</fieldset><br>明白了，谢谢。（发现其实以前读书时都看过，现在全忘了，哎......）</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280386,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280386,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280390" class="layer">#10楼</a><a name="2280390" id="comment_anchor_2280390"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_2280390" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 11:31</span></small>
+			</h5>
+			<div id="comment_body_2280390" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280386" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2280386);">@</a>百分百好牛<br>呵呵，但是我发现这一类的技术是不是已经过时了，不知道自己写下来有什么用...= =</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280390,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280390,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280390_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280831" class="layer">#11楼</a><a name="2280831" id="comment_anchor_2280831"></a></cite> <a id="a_comment_author_2280831" href="http://www.cnblogs.com/szwe/" target="_blank">szwe</a> <a href="http://msg.cnblogs.com/msg/send/szwe" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 20:08</span></small>
+			</h5>
+			<div id="comment_body_2280831" class="blog_comment_body">哈夫曼就是定长信息转换成不定长信息的压缩方式，实际上压缩率低的可以</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280831,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280831,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280845" class="layer">#12楼</a><a name="2280845" id="comment_anchor_2280845"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_2280845" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-27 20:41</span></small>
+			</h5>
+			<div id="comment_body_2280845" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280831" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2280831);">@</a>szwe<br><fieldset class="comment_quote"><legend><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280831" title="查看引用原文">引用</a></legend>szwe：哈夫曼就是定长信息转换成不定长信息的压缩方式，实际上压缩率低的可以</fieldset><br>麻烦就在数据量大的时候，统计要一定的时间，...</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2280845,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2280845,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2280845_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2283776" class="layer">#13楼</a><a name="2283776" id="comment_anchor_2283776"></a></cite> <a id="a_comment_author_2283776" href="http://www.cnblogs.com/gooking/" target="_blank">GK的知识博客</a> <a href="http://msg.cnblogs.com/msg/send/GK%e7%9a%84%e7%9f%a5%e8%af%86%e5%8d%9a%e5%ae%a2" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-31 10:22</span></small>
+			</h5>
+			<div id="comment_body_2283776" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2280367" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2280367);">@</a>捣乱小子<br>是的，哈弗曼排序的依据是概率的高低，算术编码中区间大小分配的依据是概率大小，jpeg中对dct系数的处理基于的理论是ac系数0出现的概率最大，jpeg2000MQ编码器也是基于概率的二进制算是编码器，其实熵编码中信息熵的定义就是概率乘以概率的对数，压缩技术的基础就是概率统计吧，个人观点。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2283776,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2283776,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2283776_avatar" style="display:none;">http://pic.cnitblog.com/face/u349884.jpg?id=14101357</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2283795" class="layer">#14楼</a><a name="2283795" id="comment_anchor_2283795"></a></cite> <a id="a_comment_author_2283795" href="http://www.cnblogs.com/gooking/" target="_blank">GK的知识博客</a> <a href="http://msg.cnblogs.com/msg/send/GK%e7%9a%84%e7%9f%a5%e8%af%86%e5%8d%9a%e5%ae%a2" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-31 10:33</span></small>
+			</h5>
+			<div id="comment_body_2283795" class="blog_comment_body">最为复杂的不应该是第4步，这一步任何一个IDE都有相应的函数来做，位操作是编程语言必须具备的，而不是搞压缩算法所需要关注的，最关键的是第1步，统计，对一个样本的频率统计概率往往不能适应其他的样，那就意味着需要换一套哈弗曼的码本，而一个平衡的估计适应大多数样本，采用一个码本，例如jpeg的熵编码的一部分采用的就是统一码本的哈弗曼编码</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2283795,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2283795,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2283795_avatar" style="display:none;">http://pic.cnitblog.com/face/u349884.jpg?id=14101357</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2283898" class="layer">#15楼</a><a name="2283898" id="comment_anchor_2283898"></a>[<span class="louzhu">楼主</span>]</cite> <a id="a_comment_author_2283898" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2011-12-31 11:33</span></small>
+			</h5>
+			<div id="comment_body_2283898" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2283795" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2283795);">@</a>GUCAS_Gooking<br>好像很多人都提到了jpeg，找个时间好好研究一下jpeg。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2283898,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2283898,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2283898_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2448082" class="layer">#16楼</a><a name="2448082" id="comment_anchor_2448082"></a></cite> <a id="a_comment_author_2448082" href="http://home.cnblogs.com/u/429678/" target="_blank">feibinyang</a> <a href="http://msg.cnblogs.com/msg/send/feibinyang" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2012-08-14 10:53</span></small>
+			</h5>
+			<div id="comment_body_2448082" class="blog_comment_body">讲得很清楚了，只是没看懂，再看吧、。。。。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2448082,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2448082,&#39;Bury&#39;,this)">反对(0)</a></div>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+		<li class="alt">
+			<h5>
+				<cite><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2448103" class="layer">#17楼</a><a name="2448103" id="comment_anchor_2448103"></a>[<span class="louzhu">楼主</span>]<span id="comment-maxId" style="display:none;">2448103</span><span id="comment-maxDate" style="display:none;">2012/8/14 11:15:01</span></cite> <a id="a_comment_author_2448103" href="http://www.cnblogs.com/daoluanxiaozi/" target="_blank">捣乱小子</a> <a href="http://msg.cnblogs.com/msg/send/%e6%8d%a3%e4%b9%b1%e5%b0%8f%e5%ad%90" title="发送站内短消息" class="sendMsg2This">&nbsp;</a><small> <span class="comment_date">2012-08-14 11:15</span></small>
+			</h5>
+			<div id="comment_body_2448103" class="blog_comment_body"><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2448082" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2448082);">@</a>feibinyang<br>多看看，其实是简单的东西:)</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2448103,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2448103,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2448103_avatar" style="display:none;">http://pic.cnitblog.com/face/u334495.jpg?id=24095124</span>
+			<div class="opt_comment"><span class="comment_actions"></span></div>
+		</li>
+	
+</ol>
+
+<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.imooc.com/view/139?from=cnblogs" target="_blank"><b>【免费课程】分享：PS入门教程——新手过招</b></a><br><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://www.rongcloud.cn/promotion" target="_blank">融云，免费为你的App加入IM功能——让你的App“聊”起来！！</a><br><a href="http://www.cnblogs.com/cmt/p/tingyun.html" target="_blank">写“听云”原创博文，赢取iPhone 6超级大奖</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    <script type="text/javascript">
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+</div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/509743/" target="_blank">天使眼中的余佳文：为他的独有气质打动</a><br> ·  <a href="http://news.cnblogs.com/n/509742/" target="_blank">Facebook公布美国各州感恩图</a><br> ·  <a href="http://news.cnblogs.com/n/509741/" target="_blank">看看你去苹果的话，能挣多少钱？</a><br> ·  <a href="http://news.cnblogs.com/n/509740/" target="_blank">Facebook将过滤免费广告 小企业很受伤</a><br> ·  <a href="http://news.cnblogs.com/n/509739/" target="_blank">索尼悄然建造电子纸智能手表 可随姿势改变外观</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id="div-gpt-ad-1410860226396-0" style="width:468px; height:60px;">
+<script type="text/javascript">
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+<div id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/509630/" target="_blank">Couchbase：更好的Cache系统</a><br> ·  <a href="http://kb.cnblogs.com/page/509527/" target="_blank">缓存是新的内存</a><br> ·  <a href="http://kb.cnblogs.com/page/509402/" target="_blank">亿级Web系统搭建——单机到分布式集群</a><br> ·  <a href="http://kb.cnblogs.com/page/508478/" target="_blank">SOA与API的分裂和统一</a><br> ·  <a href="http://kb.cnblogs.com/page/509278/" target="_blank">可测性分析和实践</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.contentRendered;
+            if (m) { m(__$("content")); }
+        </script>
+
+        <div id="sidebar">
+            
+<div id="about">
+<div>
+<h2 id="about_title">About</h2>
+<div id="about_body">
+<div id="blog-news"><a href="http://daoluan.net/itbirds/">
+<img src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/itbird_book_cover.png" width="50%" height="50%">
+</a>
+<br>
+<strong>这是我和一位同学合作的一本电子书, 记录了我们大学的成长历程. </strong><a href="http://bibodeng.com/bibodeng/IT_birds/">点击进入主页</a><a>
+
+<div style="text-align: left; "><img src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/puppy.jpg" alt="" width="120" height="120"></div><p>g.daoluan(at)gmail.com</p>
+
+
+<div id="weibowidget"><iframe width="100%" height="120" class="share_self" frameborder="0" scrolling="no" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/index.htm"></iframe></div>
+
+</a><p><a>
+</a><a href="http://info.flagcounter.com/7mb"><img src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/saved_resource" alt="Flag Counter" border="0"></a>
+
+
+
+</p><a href="http://www.cnzz.com/stat/website.php?web_id=4810808" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/pic1.gif"></a>
+
+
+<div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/daoluanxiaozi/">捣乱小子</a><br>园龄：<a href="http://home.cnblogs.com/u/daoluanxiaozi/" title="入园时间：2011-09-21">3年2个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/daoluanxiaozi/followers/">172</a><br>关注：<a href="http://home.cnblogs.com/u/daoluanxiaozi/followees/">16</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;a8c0022f-5ee4-e011-8ee0-842b2b196315&#39;)">+加关注</a></div></div></div>
+<script type="text/javascript">loadBlogNews();</script>
+</div>
+</div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.aboutRendered;
+                if (m) { m(__$("about")); }
+            </script>
+            
+<div id="mySearchWrapper">
+    <div id="mySearch">
+        <input type="image" src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/btnsearch.gif" id="btnZzk" class="submit" onclick="zzk_go();return false;">
+        <label class="lb_search"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="keyword"></label>
+    </div>
+</div>
+
+            <script type="text/javascript">
+                var m = window.__blog.searchFormRendered;
+                if (m) { m(__$("searchform")); }
+            </script>
+            <div id="sideMain">
+            <div id="side-recent-posts">
+        <h2>最新随笔</h2>
+        <ul class="bullet">
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3724299.html">深入剖析 redis 主从复制</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3664922.html">深入剖析 redis AOF 持久化策略</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3643721.html">初探单点登录 SSO</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3625285.html">深入剖析 redis RDB 持久化策略</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3590093.html">深入剖析 redis 事件驱动</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3482975.html">memcached 源码阅读笔记</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3420559.html">Django 源码小剖: Django ORM 查询管理器</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3364649.html">Django 源码小剖: Django 对象关系映射(ORM)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3345945.html">红黑树并没有我们想象的那么难(下)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3340382.html">红黑树并没有我们想象的那么难(上)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3335911.html">Django 源码小剖: 响应数据 response 的返回</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3332400.html">Django 源码小剖: 更高效的 URL 调度器(URL dispatcher)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3323352.html">Django 源码小剖: URL 调度器(URL dispatcher)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3320618.html">Django 源码小剖: 初探中间件(middleware)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3315838.html">Django 源码小剖: 应用程序入口 WSGIHandler</a></li>
+        </ul>
+    </div><div id="side-recent-comments">
+        <h2>最新评论</h2>
+        <ul class="voice">
+                <li>
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/p/3724299.html#3008949">Re:深入剖析 redis 主从复制</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/daoluanxiaozi/p/3724299.html#3008949">
+                        </a><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/26/2302464.html#2993250" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2993250);">@</a>江文<br>弄清楚之后是觉着之前难了。
+                        -- 捣乱小子
+                    
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/09/11/2679972.html#3008945">Re:C++ 一不小心被delete两次</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/09/11/2679972.html#3008945">
+                        @Blue－RainHI Blue－Rain，非常同意的你的看法。“删除指针时候没有置空回去，而且指针在使用时候没有做空判断。”这是编程良好的习惯，我已经添加到博客中了。但此方法仍无法解决传值调用后对象成员变量被销毁的问题，这容易给用户带来错觉。你的方法最好是结合重载深度拷贝函数。或者，直接使用引用......
+                        -- 捣乱小子
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/09/11/2679972.html#2998826">Re:C++ 一不小心被delete两次</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/09/11/2679972.html#2998826">
+                        楼主，也没有看完你写的具体内容，那么长也懒得看，只看你标题觉得，你可能是删除指针时候没有置空回去，而且指针在使用时候没有做空判断。而且你new堆空间上不自己delete它是不会释放的。ps:char *pName = new char [10];if(NULL != pName){ memset(p......
+                        -- Blue－Rain
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/p/3724299.html#2993250">Re:深入剖析 redis 主从复制</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/daoluanxiaozi/p/3724299.html#2993250">
+                        简单的东西，弄得太复杂了。
+                        -- 江文
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/04/25/3042732.html#2959795">Re:C++ 多态实现机制</a>
+                    <br>
+                    <a class="child" href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/04/25/3042732.html#2959795">
+                        顶啊！！
+                        -- Letsgollc
+                    </a>
+                </li>
+        </ul>
+    </div></div>
+            <div id="sideRight">
+            <div id="side-archives">
+        <h2>随笔档案</h2>
+        <ul class="date">
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2014/05.html">2014年5月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2014/04.html">2014年4月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2014/03.html">2014年3月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/12.html">2013年12月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/11.html">2013年11月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/10.html">2013年10月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/09.html">2013年9月(9)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/08.html">2013年8月(5)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/07.html">2013年7月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/05.html">2013年5月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/04.html">2013年4月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2013/03.html">2013年3月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/12.html">2012年12月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/11.html">2012年11月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/09.html">2012年9月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/08.html">2012年8月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/07.html">2012年7月(2)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/06.html">2012年6月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/05.html">2012年5月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/04.html">2012年4月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/03.html">2012年3月(3)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/02.html">2012年2月(4)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/01.html">2012年1月(1)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12.html">2011年12月(9)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/11.html">2011年11月(6)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/10.html">2011年10月(17)</a></li>
+                <li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/09.html">2011年9月(7)</a></li>
+        </ul>
+    </div></div>
+            <div id="sideLeft">
+            <div id="side-categories">
+        <h2>随笔分类</h2>
+        <ul class="folder">
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/367831.html">Algorithm(13)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/340060.html">C/C++(21)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/324567.html">Linux(10)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/336348.html">MFC Project(7)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/324272.html">VC++(14)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/324271.html">win32编程(20)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/471529.html">计算机基础(3)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/324922.html">数据结构(9)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/341296.html">图像处理(4)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/401277.html">网络(5)</a>
+                </li>
+                <li>
+                    
+                    <a href="http://www.cnblogs.com/daoluanxiaozi/category/341445.html">学习笔记(36)</a>
+                </li>
+        </ul>
+    </div><div id="side-top-posts-custom">
+    <h2>推荐排行榜</h2>
+    <div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3643721.html">1. 初探单点登录 SSO(31)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3340382.html">2. 红黑树并没有我们想象的那么难(上)(12)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/02/08/2340530.html">3. 从简单的算法初探过程汇编(8)</a></li><li><a href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/哈夫曼压缩算法 - 捣乱小子 - 博客园.htm">4. 哈夫曼压缩算法(7)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/09/2281796.html">5. C++对析构函数的误解(6)</a></li></ul></div>
+</div><div id="side-top-posts">
+    <h2>阅读排行榜</h2>
+    <div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2011/12/04/2275364.html">1. C++虚函数和纯虚函数（1）(8563)</a></li><li><a href="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/哈夫曼压缩算法 - 捣乱小子 - 博客园.htm">2. 哈夫曼压缩算法(4937)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/p/3340382.html">3. 红黑树并没有我们想象的那么难(上)(4714)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/04/26/2471256.html">4. 《编程珠玑，字字珠玑》读书笔记完结篇——AVL树(4132)</a></li><li><a href="http://www.cnblogs.com/daoluanxiaozi/archive/2012/05/06/2486105.html">5. 背包问题（01背包，完全背包，多重背包）(3731)</a></li></ul></div>
+</div>    
+    
+    
+    
+
+
+</div>
+            
+                <div id="sideContainer"></div>
+                <script type="text/javascript">
+                    $.ajax({
+                        url: '/' + currentBlogApp + '/mvc/blog/Minyx2_Lite_SideColumn.aspx',
+                        data: '{}',
+                        type: 'post',
+                        dataType: 'text',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            if (data) {
+                                $("#sideContainer").html(data);
+                                loadBlogDefaultCalendar();
+                                loadBlogSideBlocks();
+                                var m = window.__blog.sideContainerRendered;
+                                if (m) { m(__$("sideContainer")); }
+                                window.__blog.sidebar.__layout();
+                            }
+                        }
+                    });
+
+                </script>
+            
+        </div>
+
+        <script type="text/javascript">
+            var m = window.__blog.sidebarRendered;
+            if (m) { m(__$("sidebar")); }
+        </script>
+
+        <div id="footer">
+            
+<p id="logoFoot">
+    <a href="http://www.spiga.com.mx/" title="Agencia Interactiva Spiga">www.spiga.com.mx</a>
+</p>
+<div class="footText">
+<p>
+Copyright ©2014 捣乱小子
+</p>
+<p>
+<a href="http://www.cnblogs.com/">博客园</a>
+</p>
+</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var m = window.__blog.wrapperRendered;
+        if (m) { m(__$("wrapper")); }
+    </script>
+
+</div>
+<script type="text/javascript">
+    var m = window.__blog.containerRendered;
+    if (m) { m(__$("container")); }
+</script>
+
+
+<iframe src="./哈夫曼压缩算法 - 捣乱小子 - 博客园_files/container.htm" style="visibility: hidden; display: none;"></iframe></body></html>

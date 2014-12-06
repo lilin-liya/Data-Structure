@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)http://blog.csdn.net/common/ad.html?t=12&containerId=ad_commend&frmId=ad_frm_2 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CSDN Ad</title>
+    <style type="text/css">
+        body { margin:0px; padding:0px;}
+    </style>
+     <script src="jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="div1"><style type="text/css">
+ul { margin:0px; padding:0 4px 0 0; }
+ul, x:-moz-any-link, x:default { width:90%; }
+ul li { padding:3px 0px;}
+a { font-size:12px; text-decoration:none; color:#006699; }
+a:hover { color:#000; }
+</style>
+
+<ul>
+
+<li><a href="http://blog.csdn.net/foruok/article/details/41152297" target="_blank">* Qt Quick实现的涂鸦程序</a></li>
+
+<li><a href="http://blog.csdn.net/yang_best/article/details/41441371" target="_blank">* 优秀的编程风格（Java篇）——高薪必看</a></li>
+
+<li><a href="http://blog.csdn.net/absurd/article/details/41316673" target="_blank">* HTML5游戏实战(1)：50行代码实现正面跑酷游戏</a></li>
+
+<li><a href="http://blog.csdn.net/zhaokaiqiang1992/article/details/41349819" target="_blank">* 原来Github上的README.md文件这么有意思——Markdown语言详解</a></li>
+
+<li><a href="http://blog.csdn.net/bbld_/article/details/41439715" target="_blank">* Android Material Design之Toolbar与Palette实践</a></li>
+
+<li><a href="http://blog.csdn.net/mobanchengshuang/article/details/41441381" target="_blank">* 边喝咖啡边学Unity——第一章 Unity概述</a></li>
+</ul></div>
+<script type="text/javascript">
+    window.onload = function () {
+        if (document.domain != 'blog.csdn.net') {
+            document.domain = "csdn.net";
+        }
+        //这种给广告区域赋值的方式，对于有些JS广告不能完美的显示
+        //top.document.getElementById('ad_commend').innerHTML = document.getElementById('div1').innerHTML;
+
+        var h = document.body.offsetHeight + 2;
+        setTimeout(function () {
+            if (h > 800) h = document.getElementById('div1').offsetHeight + 4;
+            try { top.document.getElementById('ad_frm_2').style.height = h + 'px'; }
+            catch (err) { }
+        }, 100);
+    };
+    $(function() {
+        $("#div1 a").click(function() {
+            top._gaq.push(['_trackEvent', 'function', 'onclick', 'blog_articles_tuijianwenzhang']);
+        });
+    });
+</script>
+
+
+</body></html>
