@@ -1,0 +1,22 @@
+First, I sincerely apologize for my dishonest behaviour before.No excuse can explain it.And I promise never to do it again.
+
+This version of lab3 is a brand new one,I can guarantee that all the codes except the expression calculation part(aka,the "expcalculate.h","variable.h"),are all wrote by myself.
+
+In this Lab,I designed:
+1.a BasicLine class for each line we input
+2.a BasicProgram class for the whole lines with linenumber
+3.a Expression class and its three child classes for calculation
+4.a EvalState class for the variables used in the basicprogram
+5.The whole frame is like below:
+{
+	getLine();
+
+	analyse the line;
+
+	if(this line has no linenumber)
+		run it immediately;
+	if(this line has a linenumber)
+		add it into the BasicProgram class,wait for run later;
+	if(this line is any command that the interpreter need to provide)
+		behave correspondly;
+} 
