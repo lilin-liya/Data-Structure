@@ -1,4 +1,0 @@
-basic
-=====
-
-interpreter for BASIC
